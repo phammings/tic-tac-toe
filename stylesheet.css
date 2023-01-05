@@ -1,0 +1,197 @@
+:root {
+	--grid-paper: 2px;
+	--cell: 175px;
+	--lines-draw-time: 3s;
+	--lines-draw-delay: 150ms;
+	--paper-bg:
+		url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/paper-grid-pattern.png),
+		radial-gradient(at top left,
+			rgba(212, 226, 173, 0.05),
+			rgba(231, 236, 185, 0.25)
+		),
+		url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/paper-textured-background.jpg);
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+
+}
+html {
+	height: 100vh;
+	background: var(--paper-bg);
+	background-position: center;
+}
+
+body {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+
+
+/* - - - board - - - */
+.board {
+	position: absolute;
+	isolation: isolate;
+	padding: var(--grid-paper);
+	display: grid;
+	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+	gap: var(--grid-paper);
+}
+
+.cell {
+	width: calc(var(--cell) - var(--grid-paper));
+	height: calc(var(--cell) - var(--grid-paper));
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 3em;
+} .cell:hover {
+	background-color: rgba(231, 236, 185, 0.5);
+	cursor: pointer;
+}
+
+.line {
+	position: absolute;
+	background: url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/pencil-stroke.png) no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 15px;
+}
+
+.line.l1 {
+	left: 0;
+	top: 33%;
+	rotate: 1deg;
+	clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
+}
+.line.l1.animate {
+	animation: line-draw-1 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+@keyframes line-draw-1 {
+	0%, 50% {clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%); }
+	60%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
+.line.l2 {
+	left: 0;
+	bottom: 31%;
+	rotate: 180deg;
+	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+.line.l2.animate {
+	animation: line-draw-2 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+@keyframes line-draw-2 {
+	0%, 70% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+	80%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+.line.l3 {
+	rotate: 90.5deg;
+	top: 49%;
+	left: 17%;
+	clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
+}
+.line.l3.animate {
+	animation: line-draw-3 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+@keyframes line-draw-3 {
+	0%, 30% {clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%); }
+	40%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+.line.l4 {
+	top: 50%;
+	right: 17%;
+	rotate: 270deg;
+	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+.line.l4.animate{
+	animation: line-draw-4 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+@keyframes line-draw-4 {
+	0%, 10% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+	20%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
+.hand {
+	position: absolute;
+	left: 150%;
+	top: 150%;
+	transform-origin: 0 0;
+	scale: 75%;
+	transition: position .5s;
+}
+.hand.animate {
+	animation: board-draw var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes board-draw {
+	0% {left: 150%; top: 150%; }
+	10% { left: 33%; top: 0% }
+	20% { left: 33%; top: 100% }
+	30% { left: 66%; top: 0% }
+	40% { left: 66%; top: 100% }
+	50% { left: 0%; top: 33%; }
+	60% { left: 100%; top: 33%; }
+	70% { left: 0%; top: 66%; }
+	80% { left: 100%; top: 66%; }
+	100% { left: 150%; top: 150%; }
+}
+
+.page-turn {
+	position: absolute;
+	left: 150%;
+	top: 0%;
+	z-index: 2;
+	width: 100%;
+	height: 150%;
+	scale: 150%;
+	transform: rotateY(50deg) skewY(2deg);
+	filter: drop-shadow(-10rem 0 1rem rgba(0, 0, 0, .25));
+	background: var(--paper-bg);
+	box-shadow:
+		inset -10rem 0 10rem rgba(0, 0, 0, .25),
+		3rem 0 20rem rgba(0, 0, 0, .25);
+	rotate: 5deg;
+}
+.page-turn.animate {
+	animation: page-turning 1s;
+}
+@keyframes page-turning {
+	0% {
+		left: 150%;
+		top: 0%;
+		width: 100%;
+		rotate: 5deg;
+		filter: drop-shadow(-10rem 0 1rem rgba(0, 0, 0, .25));
+	}
+	100% {
+		left: -350%;
+		top: -30%;
+		width: 300%;
+		rotate: 2deg;
+		filter: drop-shadow(-10rem 0 10rem rgba(0, 0, 0, .5));
+	}
+}
+
+
+
+/* buttons */
+
+.btn-start-game {
+	z-index: 1;
+	position: absolute;
+	/*font-size: 1em;*/
+	padding: .75rem 1rem;
+	bottom: 10%;
+}
+
