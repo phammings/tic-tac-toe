@@ -32,6 +32,13 @@ const gameBoard = (() => {
 				line.classList.remove("animate")
 			});
 
+            setTimeout(() => {
+                [...cells].forEach(cell => {
+                    cell.innerHTML = ""
+                    cell.removeAttribute("is-marked");
+                });
+            }, 100);
+
 			setTimeout(() => {
 				[...lines,hand].forEach(line => {
 					line.classList.add("animate")
