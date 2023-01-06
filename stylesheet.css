@@ -242,25 +242,25 @@ body {
 	clip-path: polygon(100% 0%, 100% 0, 100% 0, 100% 0, 100% 0, 100% 0);
 }
 .circle.animate {
-    animation: circle-animation 200ms var(--lines-draw-delay);
+    animation: circle-animation 2890ms var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
 
 @keyframes circle-animation {
-    0%, 10% {
-		clip-path: polygon(100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+	0%, 10% {
+		clip-path: polygon(100% 0%, 100% 0, 100% 0, 100% 0, 100% 0, 100% 0);
 	}
 	20% {
-		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+		clip-path: polygon(50% 50%, 100% 0, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
 	}
 	30% {
-		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 100%, 0% 100%);
+		clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 100%, 0 100%);
 	}
 	40% {
-		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%);
+		clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0, 0 0);
 	}
 	50%, 100% {
-		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 100% 0%);
+		clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0, 100% 0);
 	}
 }
 
@@ -280,8 +280,6 @@ body {
 }
 
 .hand.animate.cross-middle {
-	/*top: 41%;
-	left: 50%;*/
 	animation: cross-middle var(--lines-draw-time) var(--lines-draw-delay);
 }
 
@@ -382,8 +380,27 @@ body {
 	20% { left: 73%; top: 25%; }
 	30% { left: 75%; top: 8%; }
 	40% { left: 91%; top: 25%; }
-	to {left: 150%; top: 150%; }
+	41%, 100% {left: 150%; top: 150%; }
 }
+
+/* circle marker hand animations */
+
+.hand.animate.circle-middle-left {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-middle-left var(--lines-draw-time) linear;
+}
+
+
+@keyframes circle-middle-left {
+	0% {left: 150%; top: 150%; }
+	10% {left: 16.5%; top: 50%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 16.5%; top: 50%;} 
+	100% {left: 150%; top: 150%; }
+}
+
 
 
 

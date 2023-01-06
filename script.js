@@ -17,15 +17,23 @@ const gameBoard = (() => {
             if (isCircle) {
                 img.src = "resources/images/pencil-stroke-circle.png"; 
                 img.classList.add("circle");
+                hand.classList.remove("animate");
+		        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("circle-middle-left"); }, 100);
+                
             }
             else {
                 img.src = "resources/images/pencil-stroke-short.png";
                 img.classList.add("cross");
                 let img2 = document.createElement("img");
                 img2.src = "resources/images/pencil-stroke-short.png";
-                img2.classList.add("cross2").add("animate");;
+                img2.classList.add("cross2")
+                img2.classList.add("animate");;
                 img2.setAttribute("is-marked", "true");
                 event.target.appendChild(img2);
+                hand.classList.remove("animate");
+		        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("cross-top-right"); }, 100);
+                
+                
             }
             img.setAttribute("is-marked", "true");
             img.classList.add("animate");
