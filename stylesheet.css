@@ -242,7 +242,7 @@ body {
 	clip-path: polygon(100% 0%, 100% 0, 100% 0, 100% 0, 100% 0, 100% 0);
 }
 .circle.animate {
-    animation: circle-animation 2890ms var(--lines-draw-delay);
+    animation: circle-animation 1200ms var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
 
@@ -388,7 +388,7 @@ body {
 .hand.animate.circle-middle-left {
 	position: absolute;
 	animation-delay: var(--lines-draw-delay);
-    animation: circle-middle-left var(--lines-draw-time) linear;
+    animation: circle-middle-left 1300ms linear;
 }
 
 
