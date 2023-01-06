@@ -19,13 +19,12 @@ const gameBoard = (() => {
                 img.classList.add("circle");
             }
             else {
-                let img2 = document.createElement("img");
                 img.src = "resources/images/pencil-stroke-short.png";
-                img2.src = "resources/images/pencil-stroke-short.png";
                 img.classList.add("cross");
-                img2.classList.add("cross2");
+                let img2 = document.createElement("img");
+                img2.src = "resources/images/pencil-stroke-short.png";
+                img2.classList.add("cross2").add("animate");;
                 img2.setAttribute("is-marked", "true");
-                img2.classList.add("animate");
                 event.target.appendChild(img2);
             }
             img.setAttribute("is-marked", "true");
