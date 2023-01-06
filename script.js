@@ -14,11 +14,25 @@ const gameBoard = (() => {
     const addMarker = (event) => {
         if (!event.target.hasAttribute("is-marked")) {
             let img = document.createElement("img");
-            isCircle ? img.src = "resources/images/pencil-stroke-circle.png":img.src = "resources/images/pencil-stroke-short.png";
-            isCircle = !isCircle;
+            if (isCircle) {
+                img.src = "resources/images/pencil-stroke-circle.png"; 
+                img.classList.add("circle");
+            }
+            else {
+                let img2 = document.createElement("img");
+                img.src = "resources/images/pencil-stroke-short.png";
+                img2.src = "resources/images/pencil-stroke-short.png";
+                img.classList.add("cross");
+                img2.classList.add("cross2");
+                img2.setAttribute("is-marked", "true");
+                img2.classList.add("animate");
+                event.target.appendChild(img2);
+            }
             img.setAttribute("is-marked", "true");
+            img.classList.add("animate");
             event.target.appendChild(img);  
             img.parentElement.setAttribute("is-marked", "true");
+            isCircle = !isCircle;
         }
     }
 
