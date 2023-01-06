@@ -4,7 +4,7 @@
 	--grid-paper: 2px;
 	--cell: 175px;
 	--lines-draw-time: 3s;
-    --marker-draw-time: 1s;
+    --marker-draw-time: 400ms;
 	--lines-draw-delay: 150ms;
 	--paper-bg:
 		url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/paper-grid-pattern.png),
@@ -248,19 +248,19 @@ body {
 }
 
 @keyframes circle-animation {
-    0%, 30% {
+    0%, 10% {
 		clip-path: polygon(100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
 	}
-	40% {
+	20% {
 		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
 	}
-	50% {
+	30% {
 		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 100%, 0% 100%);
 	}
-	60% {
+	40% {
 		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%);
 	}
-	70%, 100% {
+	50%, 100% {
 		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 100% 0%);
 	}
 }
