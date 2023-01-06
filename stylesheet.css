@@ -1,3 +1,5 @@
+/* Credits to https://codepen.io/HectorVilas/pen/yLjPYGX for the starting template and animations. */
+
 :root {
 	--grid-paper: 2px;
 	--cell: 175px;
@@ -193,5 +195,11 @@ body {
 	/*font-size: 1em;*/
 	padding: .75rem 1rem;
 	bottom: 10%;
+}
+
+/* cells */
+
+.cell > img {
+    max-width: 3em;
 }
 
