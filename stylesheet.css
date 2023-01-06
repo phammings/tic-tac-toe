@@ -4,7 +4,6 @@
 	--grid-paper: 2px;
 	--cell: 175px;
 	--lines-draw-time: 3s;
-    --marker-draw-time: 400ms;
 	--lines-draw-delay: 150ms;
 	--paper-bg:
 		url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/paper-grid-pattern.png),
@@ -212,7 +211,7 @@ body {
 	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
 .cross.animate {
-    animation: cross-animation var(--marker-draw-time) var(--lines-draw-delay);
+    animation: cross-animation 3800ms var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
 
@@ -228,7 +227,7 @@ body {
 }
 
 .cross2.animate {
-    animation: cross-animation-two var(--marker-draw-time) var(--lines-draw-delay);
+    animation: cross-animation-two 4700ms var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
 
@@ -243,7 +242,7 @@ body {
 	clip-path: polygon(100% 0%, 100% 0, 100% 0, 100% 0, 100% 0, 100% 0);
 }
 .circle.animate {
-    animation: circle-animation var(--marker-draw-time) var(--lines-draw-delay);
+    animation: circle-animation 200ms var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
 
@@ -264,4 +263,127 @@ body {
 		clip-path: polygon(50% 50%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 100% 0%);
 	}
 }
+
+/* cross marker hand animations */
+
+.hand.animate.cross-middle-left {
+	 animation: cross-middle-left var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-middle-left {
+	0% {left: 150%; top: 150%; }
+	10% { left: 25%; top: 41%; }
+	20% { left: 7%; top: 58%; }
+	30% { left: 8%; top: 41%; }
+	40% { left: 25%; top: 58%; }
+    to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-middle {
+	/*top: 41%;
+	left: 50%;*/
+	animation: cross-middle var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-middle {
+   0% {left: 150%; top: 150%; }
+   10% { left: 58%; top: 41%; }
+   20% { left: 40%; top: 58%; }
+   30% { left: 41%; top: 41%; }
+   40% { left: 58%; top: 58%; }
+   to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-middle-right {
+	animation: cross-middle-right var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-middle-right {
+   0% {left: 150%; top: 150%; }
+   10% { left: 91%; top: 41%; }
+   20% { left: 73%; top: 58%; }
+   30% { left: 75%; top: 41%; }
+   40% { left: 91%; top: 58%; }
+   to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-bottom-left {
+	animation: cross-bottom-left var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-bottom-left {
+   0% {left: 150%; top: 150%; }
+   10% { left: 25%; top: 74%; }
+   20% { left: 7%; top: 91%; }
+   30% { left: 8%; top: 74%; }
+   40% { left: 25%; top: 91%; }
+   to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-bottom-middle {
+	animation: cross-bottom-middle var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-bottom-middle {
+	0% {left: 150%; top: 150%; }
+	10% { left: 58%; top: 74%; }
+	20% { left: 40%; top: 91%; }
+	30% { left: 41%; top: 74%; }
+	40% { left: 58%; top: 91%; }
+	to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-bottom-right {
+	animation: cross-bottom-right var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-bottom-right {
+	0% {left: 150%; top: 150%; }
+	10% { left: 91%; top: 74%; }
+	20% { left: 73%; top: 91%; }
+	30% { left: 75%; top: 74%; }
+	40% { left: 91%; top: 91%; }
+	to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-top-left {
+	animation: cross-top-left var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-top-left {
+	0% {left: 150%; top: 150%; }
+	10% { left: 25%; top: 8%; }
+	20% { left: 7%; top: 25%; }
+	30% { left: 8%; top: 8%; }
+	40% { left: 25%; top: 25%; }
+	to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-top-middle {
+	animation: cross-top-middle var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-top-middle {
+	0% {left: 150%; top: 150%; }
+	10% { left: 58%; top: 8%; }
+	20% { left: 40%; top: 25%; }
+	30% { left: 41%; top: 8%; }
+	40% { left: 58%; top: 25%; }
+	to {left: 150%; top: 150%; }
+}
+
+.hand.animate.cross-top-right {
+	animation: cross-top-right var(--lines-draw-time) var(--lines-draw-delay);
+}
+
+@keyframes cross-top-right {
+	0% {left: 150%; top: 150%; }
+	10% { left: 91%; top: 8%; }
+	20% { left: 73%; top: 25%; }
+	30% { left: 75%; top: 8%; }
+	40% { left: 91%; top: 25%; }
+	to {left: 150%; top: 150%; }
+}
+
+
 
