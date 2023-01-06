@@ -4,6 +4,7 @@
 	--grid-paper: 2px;
 	--cell: 175px;
 	--lines-draw-time: 3s;
+    --marker-draw-time: 1s;
 	--lines-draw-delay: 150ms;
 	--paper-bg:
 		url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/paper-grid-pattern.png),
@@ -202,4 +203,36 @@ body {
 .cell > img {
     max-width: 3em;
 }
+
+.cross {
+    position: absolute;
+	rotate: -45deg;
+	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+.cross.animate {
+    animation: cross-animation var(--marker-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+
+@keyframes cross-animation {
+    0%, 10% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+	20%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
+.cross2 {
+    position: absolute;
+    rotate: 45deg;
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+
+.cross2.animate {
+    animation: cross-animation-two var(--marker-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+
+@keyframes cross-animation-two {
+    0%, 20% {clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%); }
+	30%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
 
