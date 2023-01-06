@@ -13,7 +13,6 @@ const gameBoard = (() => {
 
     const addMarker = (event) => {
         if (!event.target.hasAttribute("is-marked")) {
-            console.log("Marked!");
             let img = document.createElement("img");
             isCircle ? img.src = "resources/images/pencil-stroke-circle.png":img.src = "resources/images/pencil-stroke-short.png";
             isCircle = !isCircle;
@@ -49,8 +48,6 @@ const gameBoard = (() => {
 
 	return { addListeners }
 })();
-
-// const displayController = (() => {})();
 
 
 
