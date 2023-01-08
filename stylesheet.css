@@ -391,13 +391,132 @@ body {
     animation: circle-middle-left 1300ms linear;
 }
 
-
 @keyframes circle-middle-left {
 	0% {left: 150%; top: 150%; }
 	10% {left: 16.5%; top: 50%;}
 	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
     50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
 	50% {left: 16.5%; top: 50%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-middle {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-middle 1300ms linear;
+}
+
+@keyframes circle-middle {
+	0% {left: 150%; top: 150%; }
+	10% {left: 50%; top: 50%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 50%; top: 50%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-middle-right {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-middle-right 1300ms linear;
+}
+
+@keyframes circle-middle-right {
+	0% {left: 150%; top: 150%; }
+	10% {left: 83%; top: 50%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 83%; top: 50%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-bottom-left {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-bottom-left 1300ms linear;
+}
+
+@keyframes circle-bottom-left {
+	0% {left: 150%; top: 150%; }
+	10% {left: 16.5%; top: 83%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 16.5%; top: 83%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-bottom-middle {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-bottom-middle 1300ms linear;
+}
+
+@keyframes circle-bottom-middle {
+	0% {left: 150%; top: 150%; }
+	10% {left: 50%; top: 83%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 50%; top: 83%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-bottom-right {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-bottom-right 1300ms linear;
+}
+
+@keyframes circle-bottom-right {
+	0% {left: 150%; top: 150%; }
+	10% {left: 83%; top: 83%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 83%; top: 83%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-top-left {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-top-left 1300ms linear;
+}
+
+@keyframes circle-top-left {
+	0% {left: 150%; top: 150%; }
+	10% {left: 16.5%; top: 17%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 16.5%; top: 17%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-top-middle {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-top-middle 1300ms linear;
+}
+
+@keyframes circle-top-middle {
+	0% {left: 150%; top: 150%; }
+	10% {left: 50%; top: 17%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 50%; top: 17%;} 
+	100% {left: 150%; top: 150%; }
+}
+
+.hand.animate.circle-top-right {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: circle-top-right 1300ms linear;
+}
+
+@keyframes circle-top-right {
+	0% {left: 150%; top: 150%; }
+	10% {left: 83%; top: 17%;}
+	10% { transform: rotate(-45deg) translateX(4.2%) rotate(45deg); }
+    50% { transform: rotate(360deg) translateX(4.2%) rotate(-360deg); }
+	50% {left: 83%; top: 17%;} 
 	100% {left: 150%; top: 150%; }
 }
 
