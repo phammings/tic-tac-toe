@@ -13,32 +13,15 @@ const gameBoard = (() => {
 
     const addMarker = (event) => {
         if (!event.target.hasAttribute("is-marked")) {
-            let img = document.createElement("img");
             if (isCircle) {
-                img.src = "resources/images/pencil-stroke-circle.png"; 
-                img.classList.add("circle");
-                hand.classList.remove("animate");
-		        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("circle-middle-left"); }, 100);
+                displayController.handleCircleMarker(event);
                 
             }
             else {
-                img.src = "resources/images/pencil-stroke-short.png";
-                img.classList.add("cross");
-                let img2 = document.createElement("img");
-                img2.src = "resources/images/pencil-stroke-short.png";
-                img2.classList.add("cross2")
-                img2.classList.add("animate");;
-                img2.setAttribute("is-marked", "true");
-                event.target.appendChild(img2);
-                hand.classList.remove("animate");
-		        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("cross-top-right"); }, 100);
+                displayController.handleCrossMarker(event);
                 
                 
             }
-            img.setAttribute("is-marked", "true");
-            img.classList.add("animate");
-            event.target.appendChild(img);  
-            img.parentElement.setAttribute("is-marked", "true");
             isCircle = !isCircle;
         }
     }
@@ -68,6 +51,49 @@ const gameBoard = (() => {
 	};
 
 	return { addListeners }
+})();
+
+const displayController = (() => {
+    const hand = document.querySelector(".hand");
+
+    const handleCircleMarker = (event) => {
+        let img = document.createElement("img");
+
+		img.src = "resources/images/pencil-stroke-circle.png"; 
+        img.classList.add("circle");
+        
+        hand.classList.remove("animate");
+        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("circle-top-middle"); }, 100);
+
+        img.setAttribute("is-marked", "true");
+        img.classList.add("animate");
+        event.target.appendChild(img); 
+        img.parentElement.setAttribute("is-marked", "true");
+         
+	};
+
+    const handleCrossMarker = (event) => {
+        let img = document.createElement("img");
+        let img2 = document.createElement("img");
+
+        img.src = "resources/images/pencil-stroke-short.png";
+        img.classList.add("cross");
+        img.setAttribute("is-marked", "true");
+        img.classList.add("animate");
+        event.target.appendChild(img); 
+        img.parentElement.setAttribute("is-marked", "true");
+        
+        img2.src = "resources/images/pencil-stroke-short.png";
+        img2.classList.add("cross2");
+        img2.classList.add("animate");
+        event.target.appendChild(img2);
+        img2.setAttribute("is-marked", "true");
+
+        hand.classList.remove("animate");
+        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("cross-top-right"); }, 100);
+    };
+
+    return {handleCircleMarker, handleCrossMarker};
 })();
 
 
