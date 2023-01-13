@@ -15,12 +15,9 @@ const gameBoard = (() => {
         if (!event.target.hasAttribute("is-marked")) {
             if (isCircle) {
                 displayController.handleCircleMarker(event);
-                
             }
             else {
                 displayController.handleCrossMarker(event);
-                
-                
             }
             isCircle = !isCircle;
         }
@@ -55,21 +52,23 @@ const gameBoard = (() => {
 
 const displayController = (() => {
     const hand = document.querySelector(".hand");
+    let markerType = "";
 
     const handleCircleMarker = (event) => {
+        thisEvent = event;
         let img = document.createElement("img");
 
 		img.src = "resources/images/pencil-stroke-circle.png"; 
         img.classList.add("circle");
-        
-        hand.classList.remove("animate");
-        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("circle-top-middle"); }, 100);
 
         img.setAttribute("is-marked", "true");
         img.classList.add("animate");
         event.target.appendChild(img); 
         img.parentElement.setAttribute("is-marked", "true");
          
+        markerType = "circle";
+        animateHandWithMarker(event);
+        hand.classList = "hand animate";
 	};
 
     const handleCrossMarker = (event) => {
@@ -89,8 +88,77 @@ const displayController = (() => {
         event.target.appendChild(img2);
         img2.setAttribute("is-marked", "true");
 
+        markerType = "cross";
+        animateHandWithMarker(event);
+        hand.classList = "hand animate";
+    };
+
+    const animateHandWithMarker = (event) => {
+        const hand = document.querySelector(".hand");
+        let cell = event.target.classList;
         hand.classList.remove("animate");
-        setTimeout(() => { hand.classList.add("animate"); hand.classList.add("cross-top-right"); }, 100);
+        setTimeout(() => {  
+            hand.classList.add("animate");
+            if (markerType === "circle") {
+                if (cell.contains("c1")) {
+                    hand.classList.add("circle-top-left");
+                }
+                else if (cell.contains("c2")) {
+                    hand.classList.add("circle-top-middle");
+                }
+                else if (cell.contains("c3")) {
+                    hand.classList.add("circle-top-right");
+                }
+                else if (cell.contains("c4")) {
+                    hand.classList.add("circle-middle-left");
+                }
+                else if (cell.contains("c5")) {
+                    hand.classList.add("circle-middle");
+                }
+                else if (cell.contains("c6")) {
+                    hand.classList.add("circle-middle-right");
+                }
+                else if (cell.contains("c7")) {
+                    hand.classList.add("circle-bottom-left");
+                }
+                else if (cell.contains("c8")) {
+                    hand.classList.add("circle-bottom-middle");
+                }
+                else {
+                    hand.classList.add("circle-bottom-right");
+                }    
+            }
+            else {
+                if (cell.contains("c1")) {
+                    hand.classList.add("cross-top-left");
+                }
+                else if (cell.contains("c2")) {
+                    hand.classList.add("cross-top-middle");
+                }
+                else if (cell.contains("c3")) {
+                    hand.classList.add("cross-top-right");
+                }
+                else if (cell.contains("c4")) {
+                    hand.classList.add("cross-middle-left");
+                }
+                else if (cell.contains("c5")) {
+                    hand.classList.add("cross-middle");
+                }
+                else if (cell.contains("c6")) {
+                    hand.classList.add("cross-middle-right");
+                }
+                else if (cell.contains("c7")) {
+                    hand.classList.add("cross-bottom-left");
+                }
+                else if (cell.contains("c8")) {
+                    hand.classList.add("cross-bottom-middle");
+                }
+                else {
+                    hand.classList.add("cross-bottom-right");
+                }    
+            }
+        }, 100);
+
     };
 
     return {handleCircleMarker, handleCrossMarker};
