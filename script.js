@@ -5,6 +5,7 @@ const gameBoard = (() => {
 	const pageTurn = document.querySelector(".page-turn");
 	const btnStartGame = document.querySelector(".btn-start-game");
     let isCircle = true;
+    let markedCellCount = 0;
 
 	const addListeners = () => {
 		btnStartGame.addEventListener("click", newMatch);
@@ -19,11 +20,17 @@ const gameBoard = (() => {
             else {
                 displayController.handleCrossMarker(event);
             }
+            markedCellCount += 1;
             isCircle = !isCircle;
+        }
+        if (markedCellCount >= 9) {
+            setTimeout(() => {newMatch();}, 2000);
         }
     }
 
 	const newMatch = () => {
+        markedCellCount = 0;
+        hand.classList = "hand animate";
 		pageTurn.classList.remove("animate")
 		setTimeout(() => { pageTurn.classList.add("animate") }, 100);
 
