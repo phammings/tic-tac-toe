@@ -3,12 +3,10 @@ const gameBoard = (() => {
     const cells = document.querySelectorAll(".cell");
 	const hand = document.querySelector(".hand");
 	const pageTurn = document.querySelector(".page-turn");
-	const btnStartGame = document.querySelector(".btn-start-game");
     let isCircle = true;
     let markedCellCount = 0;
 
 	const addListeners = () => {
-		btnStartGame.addEventListener("click", newMatch);
         [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
 	};
 
