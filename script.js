@@ -5,6 +5,9 @@ const gameBoard = (() => {
 	const pageTurn = document.querySelector(".page-turn");
     let isCircle = true;
     let markedCellCount = 0;
+    let gameBoard = [["", "", ""], 
+                    ["", "", ""],
+                    ["", "", ""]];
 
 	const addListeners = () => {
         [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
@@ -26,7 +29,16 @@ const gameBoard = (() => {
         }
     }
 
+    const resetGameBoard = () => {
+        for(let i = 0; i < gameBoard.length; i++){
+            for(let j = 0; j < gameBoard[i].length; j++){
+                gameBoard[i][j] = "";
+            }
+        }
+    }
+
 	const newMatch = () => {
+        resetGameBoard();
         markedCellCount = 0;
         hand.classList = "hand animate";
 		pageTurn.classList.remove("animate")
@@ -52,7 +64,7 @@ const gameBoard = (() => {
 		}, 300);
 	};
 
-	return { addListeners }
+	return { addListeners, gameBoard }
 })();
 
 const displayController = (() => {
@@ -107,59 +119,77 @@ const displayController = (() => {
             if (markerType === "circle") {
                 if (cell.contains("c1")) {
                     hand.classList.add("circle-top-left");
+                    gameBoard.gameBoard[0][0] = "O";
                 }
                 else if (cell.contains("c2")) {
                     hand.classList.add("circle-top-middle");
+                    gameBoard.gameBoard[0][1] = "O";
                 }
                 else if (cell.contains("c3")) {
                     hand.classList.add("circle-top-right");
+                    gameBoard.gameBoard[0][2] = "O";
                 }
                 else if (cell.contains("c4")) {
                     hand.classList.add("circle-middle-left");
+                    gameBoard.gameBoard[1][0] = "O";
                 }
                 else if (cell.contains("c5")) {
                     hand.classList.add("circle-middle");
+                    gameBoard.gameBoard[1][1] = "O";
                 }
                 else if (cell.contains("c6")) {
                     hand.classList.add("circle-middle-right");
+                    gameBoard.gameBoard[1][2] = "O";
                 }
                 else if (cell.contains("c7")) {
                     hand.classList.add("circle-bottom-left");
+                    gameBoard.gameBoard[2][0] = "O";
                 }
                 else if (cell.contains("c8")) {
                     hand.classList.add("circle-bottom-middle");
+                    gameBoard.gameBoard[2][1] = "O";
                 }
                 else {
                     hand.classList.add("circle-bottom-right");
+                    gameBoard.gameBoard[2][2] = "O";
                 }    
             }
             else {
                 if (cell.contains("c1")) {
                     hand.classList.add("cross-top-left");
+                    gameBoard.gameBoard[0][0] = "X";
                 }
                 else if (cell.contains("c2")) {
                     hand.classList.add("cross-top-middle");
+                    gameBoard.gameBoard[0][1] = "X";
                 }
                 else if (cell.contains("c3")) {
                     hand.classList.add("cross-top-right");
+                    gameBoard.gameBoard[0][2] = "X";
                 }
                 else if (cell.contains("c4")) {
                     hand.classList.add("cross-middle-left");
+                    gameBoard.gameBoard[1][0] = "X";
                 }
                 else if (cell.contains("c5")) {
                     hand.classList.add("cross-middle");
+                    gameBoard.gameBoard[1][1] = "X";
                 }
                 else if (cell.contains("c6")) {
                     hand.classList.add("cross-middle-right");
+                    gameBoard.gameBoard[1][2] = "X";
                 }
                 else if (cell.contains("c7")) {
                     hand.classList.add("cross-bottom-left");
+                    gameBoard.gameBoard[2][0] = "X";
                 }
                 else if (cell.contains("c8")) {
                     hand.classList.add("cross-bottom-middle");
+                    gameBoard.gameBoard[2][1] = "X";
                 }
                 else {
                     hand.classList.add("cross-bottom-right");
+                    gameBoard.gameBoard[2][2] = "X";
                 }    
             }
         }, 100);
