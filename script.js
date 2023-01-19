@@ -24,9 +24,20 @@ const gameBoard = (() => {
             markedCellCount += 1;
             isCircle = !isCircle;
         }
-        if (markedCellCount >= 9) {
-            setTimeout(() => {newMatch();}, 2000);
-        }
+        setTimeout(() => {
+            if (markedCellCount >= 9) {
+                setTimeout(() => {newMatch();}, 2000);
+            }
+            else {
+                if (checkIfWinner("O")) {
+                    console.log("O is Winner!");
+                }
+                else if (checkIfWinner("X")) {
+                    console.log("X is Winner!");
+                }
+            }
+        }, 100);
+        
     };
 
     const resetGameBoard = () => {
@@ -64,8 +75,25 @@ const gameBoard = (() => {
 		}, 300);
 	};
 
-    const checkWinner = () => {
+    const checkIfWinner = (marker) => {
+        const checkRow = (index) => {
+            return gameBoard[index] == marker && gameBoard[index+1] == marker && gameBoard[index+2] == marker;
+        };
 
+        const checkCol = (index) => {
+            return gameBoard[index] == marker && gameBoard[index+3] == marker && gameBoard[index+6] == marker;
+        };
+
+        const checkDiagLtoR = () => {
+            return gameBoard[0] == marker && gameBoard[4] == marker && gameBoard[8] == marker;
+        };
+
+        const checkDiagRtoL = () => {
+            return gameBoard[2] == marker && gameBoard[4] == marker && gameBoard[6] == marker;
+        };
+
+        return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
+        
     };
 
 	return { addListeners, gameBoard }
@@ -114,11 +142,12 @@ const displayController = (() => {
         hand.classList = "hand animate";
     };
 
+
     const animateHandWithMarker = (event) => {
         const hand = document.querySelector(".hand");
         let cell = event.target.classList;
         hand.classList.remove("animate");
-        setTimeout(() => {  
+        setTimeout(() => {
             hand.classList.add("animate");
             if (markerType === "circle") {
                 if (cell.contains("c1")) {
@@ -194,10 +223,9 @@ const displayController = (() => {
                 else {
                     hand.classList.add("cross-bottom-right");
                     gameBoard.gameBoard[8] = "X";
-                }    
-            }
+                }  
+            }  
         }, 100);
-
     };
 
     return {handleCircleMarker, handleCrossMarker};
