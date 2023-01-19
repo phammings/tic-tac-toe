@@ -44,10 +44,7 @@ const gameBoard = (() => {
 
     const resetGameBoard = () => {
         for(let i = 0; i < gameBoard.length; i++){
-            for(let j = 0; j < gameBoard[i].length; j++){
-                gameBoard[i][j] = "";
-                console.log("HI");
-            }
+                gameBoard[i] = "";
         }
     };
 
