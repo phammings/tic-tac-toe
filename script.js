@@ -26,20 +26,22 @@ const gameBoard = (() => {
         }
         setTimeout(() => {
             if (markedCellCount >= 9) {
+                [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                 setTimeout(() => {newMatch();}, 2000);
             }
             else {
                 if (checkIfWinner("O")) {
                     console.log("O is Winner!");
+                    [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                     setTimeout(() => {newMatch();}, 2000);
                 }
                 else if (checkIfWinner("X")) {
                     console.log("X is Winner!");
+                    [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                     setTimeout(() => {newMatch();}, 2000);
                 }
             }
         }, 100);
-        
     };
 
     const resetGameBoard = () => {
@@ -73,6 +75,10 @@ const gameBoard = (() => {
 				});
 			}, 100);
 		}, 300);
+        setTimeout(() => {
+            addListeners();
+        }, 3000);
+        
 	};
 
     const checkIfWinner = (marker) => {
