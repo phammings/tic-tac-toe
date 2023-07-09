@@ -5,6 +5,7 @@ const gameBoard = (() => {
 	const pageTurn = document.querySelector(".page-turn");
     let isCircle = true;
     let markedCellCount = 0;
+    let winLocation = "";
     // from left to right, top to bottom i.e. [1, 2, 3, 4, 5, 6, 7, 8, 9]
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
@@ -23,6 +24,7 @@ const gameBoard = (() => {
             }
             markedCellCount += 1;
             isCircle = !isCircle;
+            displayController.switchBotTurn();
         }
         setTimeout(() => {
             if (markedCellCount >= 9) {
@@ -33,11 +35,13 @@ const gameBoard = (() => {
                 if (checkIfWinner("O")) {
                     console.log("O is Winner!");
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
+                    displayController.handleWinner(winLocation);
                     setTimeout(() => {newMatch();}, 2000);
                 }
                 else if (checkIfWinner("X")) {
                     console.log("X is Winner!");
-                    [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
+                    [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
+                    displayController.handleWinner(winLocation);
                     setTimeout(() => {newMatch();}, 2000);
                 }
             }
@@ -52,6 +56,7 @@ const gameBoard = (() => {
 
 	const newMatch = () => {
         resetGameBoard();
+        winLocation = "";
         markedCellCount = 0;
         hand.classList = "hand animate";
 		pageTurn.classList.remove("animate")
@@ -98,8 +103,35 @@ const gameBoard = (() => {
             return gameBoard[2] == marker && gameBoard[4] == marker && gameBoard[6] == marker;
         };
 
+        const calcWinLocation = () => {
+            if (checkRow(0) == true) {
+                winLocation = "1st-row";
+            }
+            else if (checkRow(3) == true) {
+                winLocation = "2nd-row";
+            }
+            else if (checkRow(6) == true) {
+                winLocation = "3rd-row";
+            }
+            else if (checkCol(0) == true) {
+                winLocation = "1st-col";
+            }
+            else if (checkCol(1) == true) {
+                winLocation = "2nd-col";
+            }
+            else if (checkCol(2) == true) {
+                winLocation = "3rd-col";
+            }
+            else if (checkDiagLtoR() == true) {
+                winLocation = "LR-diagonal";
+            }
+            else if (checkDiagRtoL() == true) {
+                winLocation = "RL-diagonal";
+            }
+        }
+
+        calcWinLocation(marker);
         return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
-        
     };
 
 	return { addListeners, gameBoard }
@@ -108,6 +140,15 @@ const gameBoard = (() => {
 const displayController = (() => {
     const hand = document.querySelector(".hand");
     let markerType = "";
+    let isBotTurn = false;
+
+    const getBotTurn = () => {
+        console.log(isBotTurn);
+    }
+
+    const switchBotTurn = () => {
+        isBotTurn = !isBotTurn;
+    }
 
     const handleCircleMarker = (event) => {
         thisEvent = event;
@@ -123,7 +164,9 @@ const displayController = (() => {
          
         markerType = "circle";
         animateHandWithMarker(event);
-        hand.classList = "hand animate";
+        if (isBotTurn) {
+            hand.classList = "hand animate";
+        }
 	};
 
     const handleCrossMarker = (event) => {
@@ -145,7 +188,10 @@ const displayController = (() => {
 
         markerType = "cross";
         animateHandWithMarker(event);
-        hand.classList = "hand animate";
+        if (isBotTurn) {
+            hand.classList = "hand animate";
+        }
+       
     };
 
 
@@ -154,7 +200,9 @@ const displayController = (() => {
         let cell = event.target.classList;
         hand.classList.remove("animate");
         setTimeout(() => {
-            hand.classList.add("animate");
+            if (!isBotTurn) {
+                hand.classList.add("animate");
+            }
             if (markerType === "circle") {
                 if (cell.contains("c1")) {
                     hand.classList.add("circle-top-left");
@@ -234,7 +282,38 @@ const displayController = (() => {
         }, 100);
     };
 
-    return {handleCircleMarker, handleCrossMarker};
+
+    const handleWinner = (winLocation) => {
+        hand.classList.remove("animate");
+        setTimeout(() => {
+            if (winLocation == "1st-row") {
+                hand.classList.add("row-one");
+            }
+            else if (winLocation == "2nd-row") {
+                hand.classList.add("row-two");
+            }
+            else if (winLocation == "3rd-row") {
+                hand.classList.add("row-three");
+            }
+            else if (winLocation == "1st-col") {
+                hand.classList.add("col-one");
+            }
+            else if (winLocation == "2nd-col") {
+                hand.classList.add("col-two");
+            }
+            else if (winLocation == "3rd-col") {
+                hand.classList.add("col-three");
+            }
+            else if (winLocation == "LR-diagonal") {
+                hand.classList.add("LR-diagonal");
+            }
+            else if (winLocation == "RL-diagonal") {
+                hand.classList.add("RL-diagonal");
+            }
+        }, 100);
+    };
+
+    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, getBotTurn};
 })();
 
 

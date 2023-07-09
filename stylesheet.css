@@ -520,6 +520,79 @@ body {
 	100% {left: 150%; top: 150%; }
 }
 
+.hand.animate.row-one {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: row-one 1300ms linear;
+}
+
+@keyframes row-one {
+}
+
+.hand.animate.row-two {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: row-two 1300ms linear;
+}
+
+@keyframes row-two {
+}
+
+.hand.animate.row-three{
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: row-three 1300ms linear;
+}
+
+@keyframes row-three {
+}
+
+.hand.animate.col-one {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: col-one 1300ms linear;
+}
+
+@keyframes col-one{
+}
+
+.hand.animate.col-two {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: col-two 1300ms linear;
+}
+
+@keyframes col-two {
+}
+
+.hand.animate.col-three {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: col-three 1300ms linear;
+}
+
+@keyframes col-three {
+}
+
+.hand.animate.LR-diagonal {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: LR-diagonal 1300ms linear;
+}
+
+@keyframes LR-diagonal {
+}
+
+.hand.animate.RL-diagonal {
+	position: absolute;
+	animation-delay: var(--lines-draw-delay);
+    animation: RL-diagonal 1300ms linear;
+}
+
+@keyframes RL-diagonal {
+}
+
+
 
 
 
