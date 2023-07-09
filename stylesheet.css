@@ -66,13 +66,25 @@ body {
 	height: 15px;
 }
 
-.line.l1 {
-	left: 0;
+.winLine {
+	position: absolute;
+	background: url(https://raw.githubusercontent.com/HectorVilas/odin-tic-tac-toe/main/media/images/pencil-stroke.png) no-repeat;
+	background-size: 100% 100%;
+	width: 85%;
+	height: 15px;
+}
+
+.line.l1, .winLine.l5 {
 	top: 33%;
 	rotate: 1deg;
 	clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
 }
-.line.l1.animate {
+.winLine.l5 {
+	rotate: 0deg;
+	top: 15%;
+	left: 5%;
+}
+.line.l1.animate, .winLine.l5.animate {
 	animation: line-draw-1 var(--lines-draw-time) var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
@@ -81,13 +93,17 @@ body {
 	60%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
 }
 
-.line.l2 {
+.line.l2, .winLine.l6, .winLine.l7 {
 	left: 0;
 	bottom: 31%;
 	rotate: 180deg;
 	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
-.line.l2.animate {
+.winLine.l6 {
+	top: 50%;
+	left: 5%;
+}
+.line.l2.animate, .winLine.l6.animate, .winLine.l7.animate {
 	animation: line-draw-2 var(--lines-draw-time) var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
@@ -95,13 +111,26 @@ body {
 	0%, 70% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
 	80%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
 }
-.line.l3 {
+.line.l3, .winLine.l8, .winLine.l9, .winLine.l10 {
 	rotate: 90.5deg;
 	top: 49%;
 	left: 17%;
 	clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
 }
-.line.l3.animate {
+.winLine.l7 {
+	top: 80%;
+	
+}
+.winLine.l8 {
+	left: -25%;
+}
+.winLine.l9 {
+	left: 8%;
+}
+.winLine.l10 {
+	left: 40%;
+}
+.line.l3.animate, .winLine.l8.animate, .winLine.l9.aniamte, .winLine.l10.animate {
 	animation: line-draw-3 var(--lines-draw-time) var(--lines-draw-delay);
 	animation-fill-mode: forwards;
 }
@@ -120,6 +149,38 @@ body {
 	animation-fill-mode: forwards;
 }
 @keyframes line-draw-4 {
+	0%, 10% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+	20%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
+.winLine.l11 {
+	top: 50%;
+	left: -2%;
+	width: 110%;
+	rotate: 45deg;
+	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+.winLine.l11.animate{
+	animation: line-draw-5 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+@keyframes line-draw-5 {
+	0%, 10% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+	20%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
+.winLine.l12 {
+	top: 50%;
+	left: -6%;
+	width: 110%;
+	rotate: 135deg;
+	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+.winLine.l12.animate{
+	animation: line-draw-6 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+@keyframes line-draw-6 {
 	0%, 10% { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
 	20%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
 }
