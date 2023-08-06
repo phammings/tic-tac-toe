@@ -85,7 +85,7 @@ body {
 	left: 5%;
 }
 .line.l1.animate, .winLine.l5.animate {
-	animation: line-draw-1 var(--lines-draw-time) var(--lines-draw-delay);
+	animation: line-draw-1 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
 @keyframes line-draw-1 {
@@ -104,7 +104,7 @@ body {
 	left: 5%;
 }
 .line.l2.animate, .winLine.l6.aniamte, .winLine.l7.animate {
-	animation: line-draw-2 var(--lines-draw-time) var(--lines-draw-delay);
+	animation: line-draw-2 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
 @keyframes line-draw-2 {
@@ -131,7 +131,7 @@ body {
 	left: 40%;
 }
 .line.l3.animate, .winLine.l8.animate, .winLine.l9.animate, .winLine.l10.animate {
-	animation: line-draw-3 var(--lines-draw-time) var(--lines-draw-delay);
+	animation: line-draw-3 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
 @keyframes line-draw-3 {
@@ -161,7 +161,7 @@ body {
 	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
 .winLine.l11.animate{
-	animation: line-draw-5 var(--lines-draw-time) var(--lines-draw-delay);
+	animation: line-draw-5 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
 @keyframes line-draw-5 {
@@ -177,7 +177,7 @@ body {
 	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
 .winLine.l12.animate{
-	animation: line-draw-6 var(--lines-draw-time) var(--lines-draw-delay);
+	animation: line-draw-6 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
 @keyframes line-draw-6 {
@@ -325,86 +325,6 @@ body {
 	}
 }
 
-/* win cross hand animations */
-.hand.animate.line-across-top {
-	animation: line-across-top var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-across-top {
-	0% {left: 150%; top: 150%; }
-	10% { left: 5%; top: 16%; }
-	40% { left: 88%; top: 16%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-across-middle {
-	animation: line-across-middle var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-across-middle {
-	0% {left: 150%; top: 150%; }
-	10% { left: 5%; top: 51%; }
-	40% { left: 88%; top: 51%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-across-bottom {
-	animation: line-across-bottom var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-across-bottom {
-	0% {left: 150%; top: 150%; }
-	10% { left: 5%; top: 81%; }
-	40% { left: 88%; top: 81%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-down-right {
-	animation: line-down-right var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-down-right {
-	0% {left: 150%; top: 150%; }
-	10% { left: 17%; top: 9%; }
-	40% { left: 16%; top: 92%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-down-middle {
-	animation: line-down-middle var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-down-middle {
-	0% {left: 150%; top: 150%; }
-	10% { left: 51%; top: 9%; }
-	40% { left: 50%; top: 92%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-down-left {
-	animation: line-down-left var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-down-left {
-	0% {left: 150%; top: 150%; }
-	10% { left: 83%; top: 9%; }
-	40% { left: 82%; top: 92%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-diagonal-lr {
-	animation: line-diagonal-lr var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-diagonal-lr {
-	0% {left: 150%; top: 150%; }
-	10% { left: 15%; top: 13%; }
-	40% { left: 91%; top: 90%; }
-    to {left: 150%; top: 150%; }
-}
-
-.hand.animate.line-diagonal-rl {
-	animation: line-down-left var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-diagonal-rl {
-	0% {left: 150%; top: 150%; }
-	10% { left: 10%; top: 89%; }
-	40% { left: 86%; top: 13%; }
-    to {left: 150%; top: 150%; }
-}
 
 /* cross marker hand animations */
 
@@ -669,7 +589,12 @@ body {
 }
 
 @keyframes row-one {
+	0% {left: 150%; top: 150%; }
+	10% { left: 5%; top: 16%; }
+	40% { left: 88%; top: 16%; }
+    to {left: 150%; top: 150%; }
 }
+
 
 .hand.animate.row-two {
 	position: absolute;
@@ -678,6 +603,10 @@ body {
 }
 
 @keyframes row-two {
+	0% {left: 150%; top: 150%; }
+	10% { left: 5%; top: 51%; }
+	40% { left: 88%; top: 51%; }
+    to {left: 150%; top: 150%; }
 }
 
 .hand.animate.row-three{
@@ -687,15 +616,23 @@ body {
 }
 
 @keyframes row-three {
+	0% {left: 150%; top: 150%; }
+	10% { left: 5%; top: 81%; }
+	40% { left: 88%; top: 81%; }
+    to {left: 150%; top: 150%; }
 }
 
 .hand.animate.col-one {
 	position: absolute;
 	animation-delay: var(--lines-draw-delay);
-    animation: col-one 1300ms linear;
+    animation: col-one var(--lines-draw-time) linear;
 }
 
 @keyframes col-one{
+	0% {left: 150%; top: 150%; }
+	10% { left: 17%; top: 9%; }
+	40% { left: 16%; top: 92%; }
+    to {left: 150%; top: 150%; }
 }
 
 .hand.animate.col-two {
@@ -705,6 +642,10 @@ body {
 }
 
 @keyframes col-two {
+	0% {left: 150%; top: 150%; }
+	10% { left: 51%; top: 9%; }
+	40% { left: 50%; top: 92%; }
+    to {left: 150%; top: 150%; }
 }
 
 .hand.animate.col-three {
@@ -714,6 +655,11 @@ body {
 }
 
 @keyframes col-three {
+	0% {left: 150%; top: 150%; }
+	10% { left: 83%; top: 9%; }
+	40% { left: 82%; top: 92%; }
+    to {left: 150%; top: 150%; }
+	
 }
 
 .hand.animate.LR-diagonal {
@@ -723,6 +669,10 @@ body {
 }
 
 @keyframes LR-diagonal {
+	0% {left: 150%; top: 150%; }
+	10% { left: 15%; top: 13%; }
+	40% { left: 91%; top: 90%; }
+    to {left: 150%; top: 150%; }
 }
 
 .hand.animate.RL-diagonal {
@@ -732,9 +682,69 @@ body {
 }
 
 @keyframes RL-diagonal {
+	0% {left: 150%; top: 150%; }
+	10% { left: 10%; top: 89%; }
+	40% { left: 86%; top: 13%; }
+    to {left: 150%; top: 150%; }
 }
 
 
 
 
+/* win cross hand animations
+.hand.animate.line-across-top {
+	animation: line-across-top var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-across-top {
+
+}
+
+.hand.animate.line-across-middle {
+	animation: line-across-middle var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-across-middle {
+	
+}
+
+.hand.animate.line-across-bottom {
+	animation: line-across-bottom var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-across-bottom {
+	
+}
+
+.hand.animate.line-down-right {
+	animation: line-down-right var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-down-right {
+	
+}
+
+.hand.animate.line-down-middle {
+	animation: line-down-middle var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-down-middle {
+	
+}
+
+.hand.animate.line-down-left {
+	animation: line-down-left var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-down-left {
+	
+}
+
+.hand.animate.line-diagonal-lr {
+	animation: line-diagonal-lr var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-diagonal-lr {
+	
+}
+
+.hand.animate.line-diagonal-rl {
+	animation: line-down-left var(--lines-draw-time) var(--lines-draw-delay);
+}
+@keyframes line-diagonal-rl {
+	
+} */
 

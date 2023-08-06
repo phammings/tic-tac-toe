@@ -36,13 +36,13 @@ const gameBoard = (() => {
                     console.log("O is Winner!");
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                     displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 2000);
-                }
+                    setTimeout(() => {newMatch();}, 5000);
+                }//2000
                 else if (checkIfWinner("X")) {
                     console.log("X is Winner!");
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
                     displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 2000);
+                    setTimeout(() => {newMatch();}, 5000);
                 }
             }
         }, 100);
@@ -284,33 +284,58 @@ const displayController = (() => {
 
 
     const handleWinner = (winLocation) => {
-        hand.classList.remove("animate");
+        const hand = document.querySelector(".hand");
+        let line = null;
+        console.log(winLocation);
+
+        setTimeout(() => {
+            hand.classList = "hand";
+        }, 2000);
+        
         setTimeout(() => {
             if (winLocation == "1st-row") {
                 hand.classList.add("row-one");
+                line = document.querySelector(".l5");
             }
             else if (winLocation == "2nd-row") {
                 hand.classList.add("row-two");
+                line = document.querySelector(".l6");
             }
             else if (winLocation == "3rd-row") {
                 hand.classList.add("row-three");
+                line = document.querySelector(".l7");
             }
             else if (winLocation == "1st-col") {
                 hand.classList.add("col-one");
+                line = document.querySelector(".l8");
             }
             else if (winLocation == "2nd-col") {
                 hand.classList.add("col-two");
+                line = document.querySelector(".l9");
             }
             else if (winLocation == "3rd-col") {
                 hand.classList.add("col-three");
+                line = document.querySelector(".l10");
             }
             else if (winLocation == "LR-diagonal") {
                 hand.classList.add("LR-diagonal");
+                line = document.querySelector(".l11");
             }
             else if (winLocation == "RL-diagonal") {
                 hand.classList.add("RL-diagonal");
+                line = document.querySelector(".l12");
             }
-        }, 100);
+            
+            if (line != null) {
+                line.classList.add("animate");
+            }
+        }, 2100);
+        setTimeout(() => {hand.classList.add("animate");}, 2550);
+        setTimeout(() => {
+            hand.classList.remove("animate");
+            line.classList.remove("animate");
+        }, 5000);
+        
     };
 
     return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, getBotTurn};
