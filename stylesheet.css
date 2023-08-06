@@ -27,7 +27,8 @@ html {
 }
 
 body {
-	display: flex;
+	display: grid;
+	grid-auto-rows: max-content;
 	height: 100%;
 	justify-content: center;
 	align-items: center;
@@ -44,6 +45,7 @@ body {
 	display: grid;
 	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 	gap: var(--grid-paper);
+	justify-self: center;
 }
 
 .cell {
@@ -688,63 +690,34 @@ body {
     to {left: 150%; top: 150%; }
 }
 
-
-
-
-/* win cross hand animations
-.hand.animate.line-across-top {
-	animation: line-across-top var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-across-top {
-
+.player-label {
+	display: flex;
+	margin-top: 2em;
 }
 
-.hand.animate.line-across-middle {
-	animation: line-across-middle var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-across-middle {
-	
+.player-1{
+	margin-right: 15em;
 }
 
-.hand.animate.line-across-bottom {
-	animation: line-across-bottom var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-across-bottom {
-	
+.player-scores {
+	display: flex;
 }
 
-.hand.animate.line-down-right {
-	animation: line-down-right var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-down-right {
-	
+.score-1 {
+	margin-right: 18.75em;
+	margin-left: 1.5em;
 }
 
-.hand.animate.line-down-middle {
-	animation: line-down-middle var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-down-middle {
-	
-}
-
-.hand.animate.line-down-left {
-	animation: line-down-left var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-down-left {
-	
+.gamemode {
+	display: flex;
+	margin-top: 150%;
+	justify-self: center;
 }
 
-.hand.animate.line-diagonal-lr {
-	animation: line-diagonal-lr var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-diagonal-lr {
-	
+.bot-levels {
+	display:flex;
+	margin: 2em;
+	justify-self: center;
 }
 
-.hand.animate.line-diagonal-rl {
-	animation: line-down-left var(--lines-draw-time) var(--lines-draw-delay);
-}
-@keyframes line-diagonal-rl {
-	
-} */
 
