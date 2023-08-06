@@ -720,4 +720,8 @@ body {
 	justify-self: center;
 }
 
+.hidden {
+	display: none;
+}
+
 
