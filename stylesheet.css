@@ -28,7 +28,6 @@ html {
 
 body {
 	display: grid;
-	grid-auto-rows: max-content;
 	height: 100%;
 	justify-content: center;
 	align-items: center;
@@ -696,28 +695,29 @@ body {
 }
 
 .player-1{
-	margin-right: 15em;
+	margin-right: 40em;
 }
 
 .player-scores {
 	display: flex;
+	margin-top: -3em;
 }
 
 .score-1 {
-	margin-right: 18.75em;
+	margin-right: 43.75em;
 	margin-left: 1.5em;
 }
 
 .gamemode {
 	display: flex;
-	margin-top: 150%;
+	margin-top: 27em;
 	justify-self: center;
 }
 
 .bot-levels {
 	display:flex;
-	margin: 2em;
 	justify-self: center;
+	margin-top: -2em;
 }
 
 .hidden {
