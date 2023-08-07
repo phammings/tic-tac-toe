@@ -3,6 +3,9 @@ const gameBoard = (() => {
     const cells = document.querySelectorAll(".cell");
 	const hand = document.querySelector(".hand");
 	const pageTurn = document.querySelector(".page-turn");
+    const pvpBtn = document.querySelector("#pvp");
+    const pvbBtn = document.querySelector("#pvb");
+    const botLevels = document.querySelector(".bot-levels");
     let isCircle = true;
     let markedCellCount = 0;
     let winLocation = "";
@@ -12,6 +15,15 @@ const gameBoard = (() => {
 
 	const addListeners = () => {
         [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
+        if (pvbBtn.checked) {
+            botLevels.classList.remove("hidden");
+        }
+        pvbBtn.addEventListener("click", () => {
+            botLevels.classList.remove("hidden");
+        });
+        pvpBtn.addEventListener("click", () => {
+            botLevels.classList.add("hidden");
+        });
 	};
 
     const addMarker = (event) => {
