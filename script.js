@@ -19,16 +19,30 @@ const gameBoard = (() => {
 
 	const addListeners = () => {
         [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
+        addRadioListeners();
+	};
+
+    const addRadioListeners = () => {
         if (pvbBtn.checked) {
             botLevels.classList.remove("hidden");
         }
         pvbBtn.addEventListener("click", () => {
             botLevels.classList.remove("hidden");
+            setTimeout(() => {newMatch(); resetScores();}, 2000);
         });
-        pvpBtn.addEventListener("click", () => {
+        pvpBtn.addEventListener("click", () => { 
             botLevels.classList.add("hidden");
+            setTimeout(() => {newMatch(); resetScores();}, 2000);
+            
         });
-	};
+    };
+
+    const resetScores = () => {
+        score1 = 0;
+        score2 = 0;
+        playerScore1.innerHTML = score1;
+        playerScore2.innerHTML = score2;
+    }
 
     const addMarker = (event) => {
         if (!event.target.hasAttribute("is-marked")) {
@@ -84,7 +98,7 @@ const gameBoard = (() => {
         winLocation = "";
         markedCellCount = 0;
         hand.classList = "hand animate";
-		pageTurn.classList.remove("animate")
+		pageTurn.classList.remove("animate");
 		setTimeout(() => { pageTurn.classList.add("animate") }, 100);
 
 		setTimeout(() => {
@@ -163,13 +177,10 @@ const gameBoard = (() => {
 })();
 
 const displayController = (() => {
+    const pvpBtn = document.querySelector("#pvp");
     const hand = document.querySelector(".hand");
     let markerType = "";
     let isBotTurn = false;
-
-    const getBotTurn = () => {
-        console.log(isBotTurn);
-    }
 
     const switchBotTurn = () => {
         isBotTurn = !isBotTurn;
@@ -188,10 +199,15 @@ const displayController = (() => {
         img.parentElement.setAttribute("is-marked", "true");
          
         markerType = "circle";
+
         animateHandWithMarker(event);
         if (isBotTurn) {
-            hand.classList = "hand animate";
+            if (!pvpBtn.checked) {
+                hand.classList = "hand animate";
+            }
+            
         }
+        
 	};
 
     const handleCrossMarker = (event) => {
@@ -212,10 +228,14 @@ const displayController = (() => {
         img2.setAttribute("is-marked", "true");
 
         markerType = "cross";
+
         animateHandWithMarker(event);
         if (isBotTurn) {
-            hand.classList = "hand animate";
+            if (!pvpBtn.checked) {
+                hand.classList = "hand animate";
+            }
         }
+        
        
     };
 
@@ -223,9 +243,12 @@ const displayController = (() => {
     const animateHandWithMarker = (event) => {
         const hand = document.querySelector(".hand");
         let cell = event.target.classList;
+
         hand.classList.remove("animate");
+
+        
         setTimeout(() => {
-            if (!isBotTurn) {
+            if (!isBotTurn && !pvpBtn.checked) {
                 hand.classList.add("animate");
             }
             if (markerType === "circle") {
@@ -362,7 +385,7 @@ const displayController = (() => {
         
     };
 
-    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, getBotTurn};
+    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner};
 })();
 
 
