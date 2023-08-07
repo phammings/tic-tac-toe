@@ -6,9 +6,13 @@ const gameBoard = (() => {
     const pvpBtn = document.querySelector("#pvp");
     const pvbBtn = document.querySelector("#pvb");
     const botLevels = document.querySelector(".bot-levels");
+    const playerScore1 = document.querySelector(".score-1");
+    const playerScore2 = document.querySelector(".score-2");
     let isCircle = true;
     let markedCellCount = 0;
     let winLocation = "";
+    let score1 = 0;
+    let score2 = 0;
     // from left to right, top to bottom i.e. [1, 2, 3, 4, 5, 6, 7, 8, 9]
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
@@ -46,18 +50,27 @@ const gameBoard = (() => {
             else {
                 if (checkIfWinner("O")) {
                     console.log("O is Winner!");
+                    isCircle ? score2++ : score1++;
+                    updateScores();
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                     displayController.handleWinner(winLocation);
                     setTimeout(() => {newMatch();}, 5000);
                 }//2000
                 else if (checkIfWinner("X")) {
                     console.log("X is Winner!");
+                    isCircle ? score2++ : score1++;
+                    updateScores();
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
                     displayController.handleWinner(winLocation);
                     setTimeout(() => {newMatch();}, 5000);
                 }
             }
         }, 100);
+    };
+
+    const updateScores = () => {
+      playerScore1.innerHTML = score1;
+      playerScore2.innerHTML = score2;  
     };
 
     const resetGameBoard = () => {
@@ -298,7 +311,6 @@ const displayController = (() => {
     const handleWinner = (winLocation) => {
         const hand = document.querySelector(".hand");
         let line = null;
-        console.log(winLocation);
 
         setTimeout(() => {
             hand.classList = "hand";
