@@ -8,11 +8,14 @@ const gameBoard = (() => {
     const botLevels = document.querySelector(".bot-levels");
     const playerScore1 = document.querySelector(".score-1");
     const playerScore2 = document.querySelector(".score-2");
+    const normalLevel = document.querySelector("#normal");
+    const impossibleLevel = document.querySelector("#impossible");
     let isCircle = true;
     let markedCellCount = 0;
     let winLocation = "";
     let score1 = 0;
     let score2 = 0;
+    let botLevel = "";
     // from left to right, top to bottom i.e. [1, 2, 3, 4, 5, 6, 7, 8, 9]
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
@@ -25,6 +28,12 @@ const gameBoard = (() => {
     const addRadioListeners = () => {
         if (pvbBtn.checked) {
             botLevels.classList.remove("hidden");
+            if(normalLevel.checked) {
+                botLevel = "Normal";
+            }
+            else {
+                botLevel = "Impossible";
+            }
         }
         pvbBtn.addEventListener("click", () => {
             botLevels.classList.remove("hidden");
@@ -48,15 +57,40 @@ const gameBoard = (() => {
         if (!event.target.hasAttribute("is-marked")) {
             if (isCircle) {
                 displayController.handleCircleMarker(event);
+                displayController.switchBotTurn();
             }
             else {
                 displayController.handleCrossMarker(event);
             }
             markedCellCount += 1;
             isCircle = !isCircle;
-            displayController.switchBotTurn();
+            
         }
-        setTimeout(() => {
+        checkBoard();
+        botTurn();
+        
+    };
+
+    const botTurn = () => {
+        if(isCircle === false && remainingMoves() > 0) {
+            if (normalLevel.checked) {
+                let randomIndex = Math.floor(Math.random() * 9);
+
+                while (gameBoard[randomIndex] !== "") {
+                    randomIndex = Math.floor(Math.random() * 9);
+                }
+                let cellValue = "c" + (randomIndex+1);
+                
+                document.querySelector("." + cellValue).click();
+                displayController.switchBotTurn();
+                
+            }
+            else {}
+        }
+    }
+
+    const checkBoard = () => {
+        //setTimeout(() => {
             if (markedCellCount >= 9) {
                 [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                 setTimeout(() => {newMatch();}, 2000);
@@ -68,19 +102,29 @@ const gameBoard = (() => {
                     updateScores();
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                     displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 5000);
-                }//2000
+                    setTimeout(() => {newMatch();}, 2000);
+                }
                 else if (checkIfWinner("X")) {
                     console.log("X is Winner!");
                     isCircle ? score2++ : score1++;
                     updateScores();
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
                     displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 5000);
+                    setTimeout(() => {newMatch();}, 2000);
                 }
             }
-        }, 100);
-    };
+        //}, 100);
+    }
+
+    const remainingMoves = () => {
+        let emptySpaces = 0;
+        for (let i = 0; i<9; i++) {
+            if (gameBoard[i] === "") {
+                emptySpaces++;
+            }
+        }
+        return emptySpaces;
+    }
 
     const updateScores = () => {
       playerScore1.innerHTML = score1;
@@ -121,6 +165,9 @@ const gameBoard = (() => {
 		}, 300);
         setTimeout(() => {
             addListeners();
+            if(!isCircle && pvbBtn.checked && normalLevel.checked) {
+                botTurn();
+            }
         }, 3000);
         
 	};
@@ -169,6 +216,49 @@ const gameBoard = (() => {
             }
         }
 
+        const minimax = (state, player) => {
+            const maxPlayer = "";
+            isCircle ? maxPlayer = "O" : maxPlayer = "X";
+            const otherPlayer = player === "X" ? "O" : "X";
+        
+            if (state.currentWinner === otherPlayer) {
+                const score = (otherPlayer === maxPlayer ? 1 : -1) * (state.numEmptySquares() + 1);
+                return { position: null, score: score };
+            } else if (!state.emptySquares()) {
+                return { position: null, score: 0 };
+            }
+        
+            let best;
+            if (player === maxPlayer) {
+                best = { position: null, score: -Infinity };
+            } else {
+                best = { position: null, score: Infinity };
+            }
+        
+            for (const possibleMove of state.availableMoves()) {
+                state.makeMove(possibleMove, player);
+                const simScore = minimax(state, otherPlayer);
+        
+                // Undo move
+                state.board[possibleMove] = ' ';
+                state.currentWinner = null;
+                simScore.position = possibleMove;
+        
+                if (player === maxPlayer) {
+                    if (simScore.score > best.score) {
+                        best = simScore;
+                    }
+                } else {
+                    if (simScore.score < best.score) {
+                        best = simScore;
+                    }
+                }
+            }
+        
+            return best;
+        }
+        
+
         calcWinLocation(marker);
         return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
     };
@@ -184,6 +274,10 @@ const displayController = (() => {
 
     const switchBotTurn = () => {
         isBotTurn = !isBotTurn;
+    }
+
+    const display = () => {
+        console.log(isBotTurn);
     }
 
     const handleCircleMarker = (event) => {
@@ -216,6 +310,7 @@ const displayController = (() => {
 
         img.src = "resources/images/pencil-stroke-short.png";
         img.classList.add("cross");
+
         img.setAttribute("is-marked", "true");
         img.classList.add("animate");
         event.target.appendChild(img); 
@@ -247,10 +342,11 @@ const displayController = (() => {
         hand.classList.remove("animate");
 
         
-        setTimeout(() => {
-            if (!isBotTurn && !pvpBtn.checked) {
+        //setTimeout(() => {
+            if (isBotTurn === true && !pvpBtn.checked) {
                 hand.classList.add("animate");
             }
+        //}, 100);
             if (markerType === "circle") {
                 if (cell.contains("c1")) {
                     hand.classList.add("circle-top-left");
@@ -327,8 +423,8 @@ const displayController = (() => {
                     gameBoard.gameBoard[8] = "X";
                 }  
             }  
-        }, 100);
-    };
+        }
+    
 
 
     const handleWinner = (winLocation) => {
@@ -385,7 +481,7 @@ const displayController = (() => {
         
     };
 
-    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner};
+    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, display};
 })();
 
 
