@@ -166,6 +166,7 @@ const gameBoard = (() => {
         setTimeout(() => {
             addListeners();
             if(!isCircle && pvbBtn.checked && normalLevel.checked) {
+                displayController.switchBotTurn();
                 botTurn();
             }
         }, 3000);
@@ -325,11 +326,7 @@ const displayController = (() => {
         markerType = "cross";
 
         animateHandWithMarker(event);
-        if (isBotTurn) {
-            if (!pvpBtn.checked) {
-                hand.classList = "hand animate";
-            }
-        }
+
         
        
     };
@@ -339,14 +336,12 @@ const displayController = (() => {
         const hand = document.querySelector(".hand");
         let cell = event.target.classList;
 
+        hand.classList = ("hand");
+
         hand.classList.remove("animate");
 
         
-        //setTimeout(() => {
-            if (isBotTurn === true && !pvpBtn.checked) {
-                hand.classList.add("animate");
-            }
-        //}, 100);
+        
             if (markerType === "circle") {
                 if (cell.contains("c1")) {
                     hand.classList.add("circle-top-left");
@@ -423,6 +418,11 @@ const displayController = (() => {
                     gameBoard.gameBoard[8] = "X";
                 }  
             }  
+
+            if (isBotTurn === true && !pvpBtn.checked) {
+                hand.classList.add("animate");
+            }
+
         }
     
 
