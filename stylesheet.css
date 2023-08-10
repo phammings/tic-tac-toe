@@ -85,7 +85,11 @@ body {
 	top: 15%;
 	left: 5%;
 }
-.line.l1.animate, .winLine.l5.animate {
+.line.l1.animate {
+	animation: line-draw-1 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+.winLine.l5.animate {
 	animation: line-draw-1 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
@@ -104,7 +108,11 @@ body {
 	top: 50%;
 	left: 5%;
 }
-.line.l2.animate, .winLine.l6.aniamte, .winLine.l7.animate {
+.line.l2.animate {
+	animation: line-draw-2 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+.winLine.l6.aniamte, .winLine.l7.animate {
 	animation: line-draw-2 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
@@ -131,10 +139,15 @@ body {
 .winLine.l10 {
 	left: 40%;
 }
-.line.l3.animate, .winLine.l8.animate, .winLine.l9.animate, .winLine.l10.animate {
+.line.l3.animate{
+	animation: line-draw-3 var(--lines-draw-time) var(--lines-draw-delay);
+	animation-fill-mode: forwards;
+}
+.winLine.l8.animate, .winLine.l9.animate, .winLine.l10.animate {
 	animation: line-draw-3 var(--lines-draw-time) 10ms;
 	animation-fill-mode: forwards;
 }
+
 @keyframes line-draw-3 {
 	0%, 30% {clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%); }
 	40%, to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
@@ -273,7 +286,7 @@ body {
 	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
 }
 .cross.animate {
-    animation: cross-animation 3800ms var(--lines-draw-delay);
+    animation: cross-animation 3800ms 50ms;
 	animation-fill-mode: forwards;
 }
 
@@ -289,7 +302,7 @@ body {
 }
 
 .cross2.animate {
-    animation: cross-animation-two 4700ms var(--lines-draw-delay);
+    animation: cross-animation-two 4700ms 50ms;
 	animation-fill-mode: forwards;
 }
 
