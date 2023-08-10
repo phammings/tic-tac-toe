@@ -61,13 +61,19 @@ const gameBoard = (() => {
             }
             else {
                 displayController.handleCrossMarker(event);
+                if (pvpBtn.checked) {
+                    displayController.switchBotTurn();
+                }
             }
             markedCellCount += 1;
             isCircle = !isCircle;
             
         }
         checkBoard();
-        botTurn();
+        if (pvbBtn.checked) {
+            botTurn();
+        }
+        
         
     };
 
@@ -166,7 +172,6 @@ const gameBoard = (() => {
         setTimeout(() => {
             addListeners();
             if(!isCircle && pvbBtn.checked && normalLevel.checked) {
-                displayController.switchBotTurn();
                 botTurn();
             }
         }, 3000);
