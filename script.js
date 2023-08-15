@@ -1,4 +1,5 @@
-const gameBoard = (() => {
+/* eslint-disable no-use-before-define */
+const game = (() => {
 	const lines = document.querySelectorAll(".line");
     const cells = document.querySelectorAll(".cell");
 	const hand = document.querySelector(".hand");
@@ -16,12 +17,7 @@ const gameBoard = (() => {
     let score2 = 0;
     // from left to right, top to bottom i.e. [1, 2, 3, 4, 5, 6, 7, 8, 9]
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
-    let gameBoard = ["", "", "", "", "", "", "", "", ""];
-
-	const addListeners = () => {
-        [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
-        addRadioListeners();
-	};
+    const gameBoard = ["", "", "", "", "", "", "", "", ""];
 
     const addRadioListeners = () => {
         pvbBtn.addEventListener("click", () => {
@@ -35,6 +31,11 @@ const gameBoard = (() => {
             }, 1000);
         });
     };
+
+	const addListeners = () => {
+        [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
+        addRadioListeners();
+	};
 
     const resetScores = () => {
         score1 = 0;
@@ -79,9 +80,9 @@ const gameBoard = (() => {
             while (gameBoard[index] !== "") {
                 index = Math.floor(Math.random() * 9);
             }
-            let cellValue = "c" + (index+1);
+            const cellValue = `c${index+1}`;
             
-            document.querySelector("." + cellValue).click();
+            document.querySelector(`.${cellValue}`).click();
             hand.classList.add("animate");
             displayController.switchBotTurn();
         }
@@ -92,29 +93,38 @@ const gameBoard = (() => {
             [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
             setTimeout(() => {newMatch();}, 4000);
         }
-        else {
-            if (checkIfWinner("O")) {
-                isCircle ? score2++ : score1++;
-                updateScores();
-                [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
-                displayController.handleWinner(winLocation);
-                setTimeout(() => { newMatch(); }, 4000);
+        else if (checkIfWinner("O")) {
+            if (isCircle) {
+                score2 += 1;
             }
-            else if (checkIfWinner("X")) {
-                isCircle ? score2++ : score1++;
-                updateScores();
-                [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
-                displayController.handleWinner(winLocation);
-                setTimeout(() => { newMatch();}, 4000);
+            else {
+                score1 += 1;
             }
+            updateScores();
+            [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
+            displayController.handleWinner(winLocation);
+            setTimeout(() => { newMatch(); }, 4000);
+            }
+        else if (checkIfWinner("X")) {
+            if (isCircle) {
+                score2 += 1;
+            }
+            else {
+                score1 += 1;
+            }
+            updateScores();
+            [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
+            displayController.handleWinner(winLocation);
+            setTimeout(() => { newMatch();}, 4000);
         }
+        
     }
 
     const remainingMoves = () => {
         let emptySpaces = 0;
-        for (let i = 0; i<9; i++) {
+        for (let i = 0; i<9; i+=1) {
             if (gameBoard[i] === "") {
-                emptySpaces++;
+                emptySpaces += 1;
             }
         }
         return emptySpaces;
@@ -126,7 +136,7 @@ const gameBoard = (() => {
     };
 
     const resetGameBoard = () => {
-        for(let i = 0; i < gameBoard.length; i++){
+        for(let i = 0; i < game.length; i+=1){
                 gameBoard[i] = "";
         }
     };
@@ -140,7 +150,8 @@ const gameBoard = (() => {
         pageTurn.classList.add("animate");
 
         [...cells].forEach(cell => {
-            cell.innerHTML = ""
+            // eslint-disable-next-line no-param-reassign
+            cell.innerHTML = "";
             cell.removeAttribute("is-marked");
             cell.classList.remove("yellow");
         });
@@ -166,45 +177,37 @@ const gameBoard = (() => {
 	};
 
     const checkIfWinner = (marker) => {
-        const checkRow = (index) => {
-            return gameBoard[index] == marker && gameBoard[index+1] == marker && gameBoard[index+2] == marker;
-        };
+        const checkRow = (index) => gameBoard[index] === marker && gameBoard[index+1] === marker && gameBoard[index+2] === marker;
+        
+        const checkCol = (index) => gameBoard[index] === marker && gameBoard[index+3] === marker && gameBoard[index+6] === marker;
 
-        const checkCol = (index) => {
-            return gameBoard[index] == marker && gameBoard[index+3] == marker && gameBoard[index+6] == marker;
-        };
+        const checkDiagLtoR = () => gameBoard[0] === marker && gameBoard[4] === marker && gameBoard[8] === marker;
 
-        const checkDiagLtoR = () => {
-            return gameBoard[0] == marker && gameBoard[4] == marker && gameBoard[8] == marker;
-        };
-
-        const checkDiagRtoL = () => {
-            return gameBoard[2] == marker && gameBoard[4] == marker && gameBoard[6] == marker;
-        };
+        const checkDiagRtoL = () => gameBoard[2] === marker && gameBoard[4] === marker && gameBoard[6] === marker;
 
         const calcWinLocation = () => {
-            if (checkRow(0) == true) {
+            if (checkRow(0) === true) {
                 winLocation = "1st-row";
             }
-            else if (checkRow(3) == true) {
+            else if (checkRow(3) === true) {
                 winLocation = "2nd-row";
             }
-            else if (checkRow(6) == true) {
+            else if (checkRow(6) === true) {
                 winLocation = "3rd-row";
             }
-            else if (checkCol(0) == true) {
+            else if (checkCol(0) === true) {
                 winLocation = "1st-col";
             }
-            else if (checkCol(1) == true) {
+            else if (checkCol(1) === true) {
                 winLocation = "2nd-col";
             }
-            else if (checkCol(2) == true) {
+            else if (checkCol(2) === true) {
                 winLocation = "3rd-col";
             }
-            else if (checkDiagLtoR() == true) {
+            else if (checkDiagLtoR() === true) {
                 winLocation = "LR-diagonal";
             }
-            else if (checkDiagRtoL() == true) {
+            else if (checkDiagRtoL() === true) {
                 winLocation = "RL-diagonal";
             }
         }        
@@ -212,12 +215,11 @@ const gameBoard = (() => {
         return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
     };
 
-	return { addListeners, gameBoard }
+	return {addListeners, gameBoard}
 })();
 
 const displayController = (() => {
     const pvpBtn = document.querySelector("#pvp");
-    const hand = document.querySelector(".hand");
     let markerType = "";
     let isBotTurn = false;
 
@@ -230,8 +232,7 @@ const displayController = (() => {
     }
 
     const handleCircleMarker = (event) => {
-        thisEvent = event;
-        let img = document.createElement("img");
+        const img = document.createElement("img");
 
 		img.src = "resources/images/pencil-stroke-circle.png"; 
         img.classList.add("circle");
@@ -247,8 +248,8 @@ const displayController = (() => {
 	};
 
     const handleCrossMarker = (event) => {
-        let img = document.createElement("img");
-        let img2 = document.createElement("img");
+        const img = document.createElement("img");
+        const img2 = document.createElement("img");
 
         img.src = "resources/images/pencil-stroke-short.png";
         img.classList.add("cross");
@@ -272,7 +273,7 @@ const displayController = (() => {
 
     const animateHandWithMarker = (event) => {
         const hand = document.querySelector(".hand");
-        let cell = event.target.classList;
+        const cell = event.target.classList;
 
         hand.classList = ("hand");
         hand.classList.remove("animate");
@@ -280,78 +281,76 @@ const displayController = (() => {
         if (markerType === "circle") {
             if (cell.contains("c1")) {
                 hand.classList.add("circle-top-left");
-                gameBoard.gameBoard[0]= "O"
+                game.gameBoard[0]= "O"
             }
             else if (cell.contains("c2")) {
                 hand.classList.add("circle-top-middle");
-                gameBoard.gameBoard[1] = "O";
+                game.gameBoard[1] = "O";
             }
             else if (cell.contains("c3")) {
                 hand.classList.add("circle-top-right");
-                gameBoard.gameBoard[2] = "O";
+                game.gameBoard[2] = "O";
             }
             else if (cell.contains("c4")) {
                 hand.classList.add("circle-middle-left");
-                gameBoard.gameBoard[3] = "O";
+                game.gameBoard[3] = "O";
             }
             else if (cell.contains("c5")) {
                 hand.classList.add("circle-middle");
-                gameBoard.gameBoard[4] = "O";
+                game.gameBoard[4] = "O";
             }
             else if (cell.contains("c6")) {
                 hand.classList.add("circle-middle-right");
-                gameBoard.gameBoard[5] = "O";
+                game.gameBoard[5] = "O";
             }
             else if (cell.contains("c7")) {
                 hand.classList.add("circle-bottom-left");
-                gameBoard.gameBoard[6] = "O";
+                game.gameBoard[6] = "O";
             }
             else if (cell.contains("c8")) {
                 hand.classList.add("circle-bottom-middle");
-                gameBoard.gameBoard[7] = "O";
+                game.gameBoard[7] = "O";
             }
             else {
                 hand.classList.add("circle-bottom-right");
-                gameBoard.gameBoard[8] = "O";
+                game.gameBoard[8] = "O";
             }    
         }
+        else if (cell.contains("c1")) {
+            hand.classList.add("cross-top-left");
+            game.gameBoard[0] = "X";
+        }
+        else if (cell.contains("c2")) {
+            hand.classList.add("cross-top-middle");
+            game.gameBoard[1] = "X";
+        }
+        else if (cell.contains("c3")) {
+            hand.classList.add("cross-top-right");
+            game.gameBoard[2] = "X";
+        }
+        else if (cell.contains("c4")) {
+            hand.classList.add("cross-middle-left");
+            game.gameBoard[3] = "X";
+        }
+        else if (cell.contains("c5")) {
+            hand.classList.add("cross-middle");
+            game.gameBoard[4] = "X";
+        }
+        else if (cell.contains("c6")) {
+            hand.classList.add("cross-middle-right");
+            game.gameBoard[5] = "X";
+        }
+        else if (cell.contains("c7")) {
+            hand.classList.add("cross-bottom-left");
+            game.gameBoard[6] = "X";
+        }
+        else if (cell.contains("c8")) {
+            hand.classList.add("cross-bottom-middle");
+            game.gameBoard[7] = "X";
+        }
         else {
-            if (cell.contains("c1")) {
-                hand.classList.add("cross-top-left");
-                gameBoard.gameBoard[0] = "X";
-            }
-            else if (cell.contains("c2")) {
-                hand.classList.add("cross-top-middle");
-                gameBoard.gameBoard[1] = "X";
-            }
-            else if (cell.contains("c3")) {
-                hand.classList.add("cross-top-right");
-                gameBoard.gameBoard[2] = "X";
-            }
-            else if (cell.contains("c4")) {
-                hand.classList.add("cross-middle-left");
-                gameBoard.gameBoard[3] = "X";
-            }
-            else if (cell.contains("c5")) {
-                hand.classList.add("cross-middle");
-                gameBoard.gameBoard[4] = "X";
-            }
-            else if (cell.contains("c6")) {
-                hand.classList.add("cross-middle-right");
-                gameBoard.gameBoard[5] = "X";
-            }
-            else if (cell.contains("c7")) {
-                hand.classList.add("cross-bottom-left");
-                gameBoard.gameBoard[6] = "X";
-            }
-            else if (cell.contains("c8")) {
-                hand.classList.add("cross-bottom-middle");
-                gameBoard.gameBoard[7] = "X";
-            }
-            else {
-                hand.classList.add("cross-bottom-right");
-                gameBoard.gameBoard[8] = "X";
-            }  
+            hand.classList.add("cross-bottom-right");
+            game.gameBoard[8] = "X";
         }  
 
         if (isBotTurn === true && !pvpBtn.checked) {
@@ -360,48 +359,49 @@ const displayController = (() => {
     }
 
     const handleWinner = (winLocation) => {
-        let c1, c2, c3;
+        let c1;
+        let c2;
+        let c3;
         
-        if (winLocation == "1st-row") {
+        if (winLocation === "1st-row") {
             c1 = document.querySelector(".c1");
             c2 = document.querySelector(".c2");
             c3 = document.querySelector(".c3");
-            
         }
-        else if (winLocation == "2nd-row") {
+        else if (winLocation === "2nd-row") {
             c1 = document.querySelector(".c4");
             c2 = document.querySelector(".c5");
             c3 = document.querySelector(".c6");
         }
-        else if (winLocation == "3rd-row") {
+        else if (winLocation === "3rd-row") {
             c1 = document.querySelector(".c7");
             c2 = document.querySelector(".c8");
             c3 = document.querySelector(".c9");
         }
-        else if (winLocation == "1st-col") {
+        else if (winLocation === "1st-col") {
             c1 = document.querySelector(".c1");
             c2 = document.querySelector(".c4");
             c3 = document.querySelector(".c7");
         }
-        else if (winLocation == "2nd-col") {
+        else if (winLocation === "2nd-col") {
             c1 = document.querySelector(".c2");
             c2 = document.querySelector(".c5");
             c3 = document.querySelector(".c8");
         }
-        else if (winLocation == "3rd-col") {
+        else if (winLocation === "3rd-col") {
             c1 = document.querySelector(".c3");
             c2 = document.querySelector(".c6");
             c3 = document.querySelector(".c9");
         }
-        else if (winLocation == "LR-diagonal") {
-            c1 = document.querySelector(".c7");
-            c2 = document.querySelector(".c5");
-            c3 = document.querySelector(".c3");
-        }
-        else if (winLocation == "RL-diagonal") {
+        else if (winLocation === "LR-diagonal") {
             c1 = document.querySelector(".c9");
             c2 = document.querySelector(".c5");
             c3 = document.querySelector(".c1");
+        }
+        else if (winLocation === "RL-diagonal") {
+            c1 = document.querySelector(".c7");
+            c2 = document.querySelector(".c5");
+            c3 = document.querySelector(".c3");
         }
             
         c1.classList.add("yellow");
@@ -412,5 +412,5 @@ const displayController = (() => {
     return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, setBotTurn};
 })();
 
-//run on start
-gameBoard.addListeners();
+//  run on start
+game.addListeners();
