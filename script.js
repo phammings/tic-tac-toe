@@ -140,17 +140,19 @@ const game = (() => {
         pageTurn.classList.remove("animate");
         pageTurn.classList.add("animate");
 
-        [...cells].forEach(cell => {
-            // eslint-disable-next-line no-param-reassign
-            cell.innerHTML = ""
-            cell.removeAttribute("is-marked");
-            cell.classList.remove("yellow");
-        });
-
-        [...lines,hand].forEach(element => {
-            element.classList.remove("animate")
-        });
-
+        setTimeout(() => {
+            [...cells].forEach(cell => {
+                // eslint-disable-next-line no-param-reassign
+                cell.innerHTML = "";
+                cell.removeAttribute("is-marked");
+                cell.classList.remove("yellow");
+            });
+    
+            [...lines,hand].forEach(element => {
+                element.classList.remove("animate")
+            });
+        }, 500);
+        
         setTimeout(() => {
             addListeners();
             hand.classList = "hand animate";
