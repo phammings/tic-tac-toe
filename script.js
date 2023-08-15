@@ -5,7 +5,7 @@ const gameBoard = (() => {
 	const pageTurn = document.querySelector(".page-turn");
     const pvpBtn = document.querySelector("#pvp");
     const pvbBtn = document.querySelector("#pvb");
-    const botLevels = document.querySelector(".bot-levels");
+    //const botLevels = document.querySelector(".bot-levels");
     const playerScore1 = document.querySelector(".score-1");
     const playerScore2 = document.querySelector(".score-2");
     const player1Label = document.querySelector(".player-1");
@@ -39,11 +39,15 @@ const gameBoard = (() => {
         // }
         pvbBtn.addEventListener("click", () => {
             // botLevels.classList.remove("hidden");
-            setTimeout(() => {newMatch(); resetScores();}, 1000);
+            setTimeout(() => {
+                newMatch(); resetScores();
+            }, 1000);
         });
         pvpBtn.addEventListener("click", () => { 
             // botLevels.classList.add("hidden");
-            setTimeout(() => {newMatch(); resetScores();}, 1000);
+            setTimeout(() => {
+                newMatch(); resetScores();
+            }, 1000);
         });
         // normalLevel.addEventListener("click", () => { 
         //     setTimeout(() => {newMatch(); resetScores();}, 4000);
@@ -63,6 +67,7 @@ const gameBoard = (() => {
     const addMarker = (event) => {
         if (!event.target.hasAttribute("is-marked")) {
             if (isCircle) {
+                displayController.setBotTurn(false);
                 displayController.handleCircleMarker(event);
                 displayController.switchBotTurn();
                 player2Label.classList.add("yellow");
@@ -101,7 +106,9 @@ const gameBoard = (() => {
             //     index = minimax(gameBoard, "X");
             // }
             let cellValue = "c" + (index+1);
+            
             document.querySelector("." + cellValue).click();
+            hand.classList.add("animate");
             displayController.switchBotTurn();
         }
     }
@@ -166,30 +173,26 @@ const gameBoard = (() => {
     // }
 
     const checkBoard = () => {
-        //setTimeout(() => {
-            if (markedCellCount >= 9) {
+        if (markedCellCount >= 9) {
+            [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
+            setTimeout(() => {newMatch();}, 4000);
+        }
+        else {
+            if (checkIfWinner("O")) {
+                isCircle ? score2++ : score1++;
+                updateScores();
                 [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
-                setTimeout(() => {newMatch();}, 4000);
+                displayController.handleWinner(winLocation);
+                setTimeout(() => { newMatch(); }, 4000);
             }
-            else {
-                if (checkIfWinner("O")) {
-                    console.log("O is Winner!");
-                    isCircle ? score2++ : score1++;
-                    updateScores();
-                    [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
-                    displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 4000);
-                }
-                else if (checkIfWinner("X")) {
-                    console.log("X is Winner!");
-                    isCircle ? score2++ : score1++;
-                    updateScores();
-                    [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
-                    displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 4000);
-                }
+            else if (checkIfWinner("X")) {
+                isCircle ? score2++ : score1++;
+                updateScores();
+                [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
+                displayController.handleWinner(winLocation);
+                setTimeout(() => { newMatch();}, 4000);
             }
-        //}, 100);
+        }
     }
 
     const remainingMoves = () => {
@@ -217,35 +220,34 @@ const gameBoard = (() => {
         resetGameBoard();
         winLocation = "";
         markedCellCount = 0;
-        hand.classList = "hand animate";
-		pageTurn.classList.remove("animate");
-		setTimeout(() => { pageTurn.classList.add("animate") }, 100);
 
-		setTimeout(() => {
-			[...lines,hand].forEach(line => {
-				line.classList.remove("animate")
-			});
+        pageTurn.classList.remove("animate");
+        pageTurn.classList.add("animate");
 
-            setTimeout(() => {
-                [...cells].forEach(cell => {
-                    cell.innerHTML = ""
-                    cell.removeAttribute("is-marked");
-                });
-            }, 100);
+        [...cells].forEach(cell => {
+            cell.innerHTML = ""
+            cell.removeAttribute("is-marked");
+            cell.classList.remove("yellow");
+        });
 
-			setTimeout(() => {
-				[...lines,hand].forEach(line => {
-					line.classList.add("animate")
-				});
-			}, 100);
-		}, 300);
+        [...lines,hand].forEach(element => {
+            element.classList.remove("animate")
+        });
+
         setTimeout(() => {
             addListeners();
-            if(!isCircle && pvbBtn.checked && normalLevel.checked) {
-                botTurn();
-            }
-        }, 4000);
-        
+            hand.classList = "hand animate";
+            [...lines,hand].forEach(element => {
+                element.classList.add("animate")
+            });
+
+            setTimeout(() => {
+                if(!isCircle && pvbBtn.checked /*&& normalLevel.checked*/) { 
+                    botTurn(); 
+                }
+                pageTurn.classList.remove("animate");
+            }, 3000);
+		}, 1000);  
 	};
 
     const checkIfWinner = (marker) => {
@@ -309,8 +311,8 @@ const displayController = (() => {
         isBotTurn = !isBotTurn;
     }
 
-    const display = () => {
-        console.log(isBotTurn);
+    const setBotTurn = (botTurn) => {
+        isBotTurn = botTurn;
     }
 
     const handleCircleMarker = (event) => {
@@ -328,13 +330,6 @@ const displayController = (() => {
         markerType = "circle";
 
         animateHandWithMarker(event);
-        if (isBotTurn) {
-            if (!pvpBtn.checked) {
-                hand.classList = "hand animate";
-            }
-            
-        }
-        
 	};
 
     const handleCrossMarker = (event) => {
@@ -358,9 +353,6 @@ const displayController = (() => {
         markerType = "cross";
 
         animateHandWithMarker(event);
-
-        
-       
     };
 
 
@@ -369,151 +361,148 @@ const displayController = (() => {
         let cell = event.target.classList;
 
         hand.classList = ("hand");
-
         hand.classList.remove("animate");
 
-        
-        
-            if (markerType === "circle") {
-                if (cell.contains("c1")) {
-                    hand.classList.add("circle-top-left");
-                    gameBoard.gameBoard[0]= "O"
-                }
-                else if (cell.contains("c2")) {
-                    hand.classList.add("circle-top-middle");
-                    gameBoard.gameBoard[1] = "O";
-                }
-                else if (cell.contains("c3")) {
-                    hand.classList.add("circle-top-right");
-                    gameBoard.gameBoard[2] = "O";
-                }
-                else if (cell.contains("c4")) {
-                    hand.classList.add("circle-middle-left");
-                    gameBoard.gameBoard[3] = "O";
-                }
-                else if (cell.contains("c5")) {
-                    hand.classList.add("circle-middle");
-                    gameBoard.gameBoard[4] = "O";
-                }
-                else if (cell.contains("c6")) {
-                    hand.classList.add("circle-middle-right");
-                    gameBoard.gameBoard[5] = "O";
-                }
-                else if (cell.contains("c7")) {
-                    hand.classList.add("circle-bottom-left");
-                    gameBoard.gameBoard[6] = "O";
-                }
-                else if (cell.contains("c8")) {
-                    hand.classList.add("circle-bottom-middle");
-                    gameBoard.gameBoard[7] = "O";
-                }
-                else {
-                    hand.classList.add("circle-bottom-right");
-                    gameBoard.gameBoard[8] = "O";
-                }    
+        if (markerType === "circle") {
+            if (cell.contains("c1")) {
+                hand.classList.add("circle-top-left");
+                gameBoard.gameBoard[0]= "O"
+            }
+            else if (cell.contains("c2")) {
+                hand.classList.add("circle-top-middle");
+                gameBoard.gameBoard[1] = "O";
+            }
+            else if (cell.contains("c3")) {
+                hand.classList.add("circle-top-right");
+                gameBoard.gameBoard[2] = "O";
+            }
+            else if (cell.contains("c4")) {
+                hand.classList.add("circle-middle-left");
+                gameBoard.gameBoard[3] = "O";
+            }
+            else if (cell.contains("c5")) {
+                hand.classList.add("circle-middle");
+                gameBoard.gameBoard[4] = "O";
+            }
+            else if (cell.contains("c6")) {
+                hand.classList.add("circle-middle-right");
+                gameBoard.gameBoard[5] = "O";
+            }
+            else if (cell.contains("c7")) {
+                hand.classList.add("circle-bottom-left");
+                gameBoard.gameBoard[6] = "O";
+            }
+            else if (cell.contains("c8")) {
+                hand.classList.add("circle-bottom-middle");
+                gameBoard.gameBoard[7] = "O";
             }
             else {
-                if (cell.contains("c1")) {
-                    hand.classList.add("cross-top-left");
-                    gameBoard.gameBoard[0] = "X";
-                }
-                else if (cell.contains("c2")) {
-                    hand.classList.add("cross-top-middle");
-                    gameBoard.gameBoard[1] = "X";
-                }
-                else if (cell.contains("c3")) {
-                    hand.classList.add("cross-top-right");
-                    gameBoard.gameBoard[2] = "X";
-                }
-                else if (cell.contains("c4")) {
-                    hand.classList.add("cross-middle-left");
-                    gameBoard.gameBoard[3] = "X";
-                }
-                else if (cell.contains("c5")) {
-                    hand.classList.add("cross-middle");
-                    gameBoard.gameBoard[4] = "X";
-                }
-                else if (cell.contains("c6")) {
-                    hand.classList.add("cross-middle-right");
-                    gameBoard.gameBoard[5] = "X";
-                }
-                else if (cell.contains("c7")) {
-                    hand.classList.add("cross-bottom-left");
-                    gameBoard.gameBoard[6] = "X";
-                }
-                else if (cell.contains("c8")) {
-                    hand.classList.add("cross-bottom-middle");
-                    gameBoard.gameBoard[7] = "X";
-                }
-                else {
-                    hand.classList.add("cross-bottom-right");
-                    gameBoard.gameBoard[8] = "X";
-                }  
-            }  
-
-            if (isBotTurn === true && !pvpBtn.checked) {
-                hand.classList.add("animate");
-            }
-
+                hand.classList.add("circle-bottom-right");
+                gameBoard.gameBoard[8] = "O";
+            }    
         }
+        else {
+            if (cell.contains("c1")) {
+                hand.classList.add("cross-top-left");
+                gameBoard.gameBoard[0] = "X";
+            }
+            else if (cell.contains("c2")) {
+                hand.classList.add("cross-top-middle");
+                gameBoard.gameBoard[1] = "X";
+            }
+            else if (cell.contains("c3")) {
+                hand.classList.add("cross-top-right");
+                gameBoard.gameBoard[2] = "X";
+            }
+            else if (cell.contains("c4")) {
+                hand.classList.add("cross-middle-left");
+                gameBoard.gameBoard[3] = "X";
+            }
+            else if (cell.contains("c5")) {
+                hand.classList.add("cross-middle");
+                gameBoard.gameBoard[4] = "X";
+            }
+            else if (cell.contains("c6")) {
+                hand.classList.add("cross-middle-right");
+                gameBoard.gameBoard[5] = "X";
+            }
+            else if (cell.contains("c7")) {
+                hand.classList.add("cross-bottom-left");
+                gameBoard.gameBoard[6] = "X";
+            }
+            else if (cell.contains("c8")) {
+                hand.classList.add("cross-bottom-middle");
+                gameBoard.gameBoard[7] = "X";
+            }
+            else {
+                hand.classList.add("cross-bottom-right");
+                gameBoard.gameBoard[8] = "X";
+            }  
+        }  
+
+        if (isBotTurn === true && !pvpBtn.checked) {
+            hand.classList.add("animate");
+        }
+    }
     
 
 
     const handleWinner = (winLocation) => {
-        const hand = document.querySelector(".hand");
-        let line = null;
-
-        setTimeout(() => {
-            hand.classList = "hand";
-        }, 2000);
+        let c1, c2, c3;
         
-        setTimeout(() => {
-            if (winLocation == "1st-row") {
-                hand.classList.add("row-one");
-                line = document.querySelector(".l5");
-            }
-            else if (winLocation == "2nd-row") {
-                hand.classList.add("row-two");
-                line = document.querySelector(".l6");
-            }
-            else if (winLocation == "3rd-row") {
-                hand.classList.add("row-three");
-                line = document.querySelector(".l7");
-            }
-            else if (winLocation == "1st-col") {
-                hand.classList.add("col-one");
-                line = document.querySelector(".l8");
-            }
-            else if (winLocation == "2nd-col") {
-                hand.classList.add("col-two");
-                line = document.querySelector(".l9");
-            }
-            else if (winLocation == "3rd-col") {
-                hand.classList.add("col-three");
-                line = document.querySelector(".l10");
-            }
-            else if (winLocation == "LR-diagonal") {
-                hand.classList.add("LR-diagonal");
-                line = document.querySelector(".l11");
-            }
-            else if (winLocation == "RL-diagonal") {
-                hand.classList.add("RL-diagonal");
-                line = document.querySelector(".l12");
-            }
+        if (winLocation == "1st-row") {
+            c1 = document.querySelector(".c1");
+            c2 = document.querySelector(".c2");
+            c3 = document.querySelector(".c3");
             
-            if (line != null) {
-                line.classList.add("animate");
-            }
-        }, 2100);
-        setTimeout(() => {hand.classList.add("animate");}, 2550);
-        setTimeout(() => {
-            hand.classList.remove("animate");
-            line.classList.remove("animate");
-        }, 5000);
+        }
+        else if (winLocation == "2nd-row") {
+            c1 = document.querySelector(".c4");
+            c2 = document.querySelector(".c5");
+            c3 = document.querySelector(".c6");
+        }
+        else if (winLocation == "3rd-row") {
+            c1 = document.querySelector(".c7");
+            c2 = document.querySelector(".c8");
+            c3 = document.querySelector(".c9");
+        }
+        else if (winLocation == "1st-col") {
+            c1 = document.querySelector(".c1");
+            c2 = document.querySelector(".c4");
+            c3 = document.querySelector(".c7");
+        }
+        else if (winLocation == "2nd-col") {
+            c1 = document.querySelector(".c2");
+            c2 = document.querySelector(".c5");
+            c3 = document.querySelector(".c8");
+        }
+        else if (winLocation == "3rd-col") {
+            c1 = document.querySelector(".c3");
+            c2 = document.querySelector(".c6");
+            c3 = document.querySelector(".c9");
+        }
+        else if (winLocation == "LR-diagonal") {
+            c1 = document.querySelector(".c7");
+            c2 = document.querySelector(".c5");
+            c3 = document.querySelector(".c3");
+        }
+        else if (winLocation == "RL-diagonal") {
+            c1 = document.querySelector(".c9");
+            c2 = document.querySelector(".c5");
+            c3 = document.querySelector(".c1");
+        }
+            
+        c1.classList.add("yellow");
+        c2.classList.add("yellow");
+        c3.classList.add("yellow");
+
+        
+        
+    
         
     };
 
-    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, display};
+    return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, setBotTurn};
 })();
 
 
