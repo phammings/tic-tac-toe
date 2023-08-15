@@ -5,19 +5,15 @@ const gameBoard = (() => {
 	const pageTurn = document.querySelector(".page-turn");
     const pvpBtn = document.querySelector("#pvp");
     const pvbBtn = document.querySelector("#pvb");
-    //const botLevels = document.querySelector(".bot-levels");
     const playerScore1 = document.querySelector(".score-1");
     const playerScore2 = document.querySelector(".score-2");
     const player1Label = document.querySelector(".player-1");
     const player2Label = document.querySelector(".player-2");
-    // const normalLevel = document.querySelector("#normal");
-    // const impossibleLevel = document.querySelector("#impossible");
     let isCircle = true;
     let markedCellCount = 0;
     let winLocation = "";
     let score1 = 0;
     let score2 = 0;
-    // let botLevel = "";
     // from left to right, top to bottom i.e. [1, 2, 3, 4, 5, 6, 7, 8, 9]
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
@@ -28,33 +24,16 @@ const gameBoard = (() => {
 	};
 
     const addRadioListeners = () => {
-        // if (pvbBtn.checked) {
-        //     botLevels.classList.remove("hidden");
-        //     if(normalLevel.checked) {
-        //         botLevel = "Normal";
-        //     }
-        //     else {
-        //         botLevel = "Impossible";
-        //     }
-        // }
         pvbBtn.addEventListener("click", () => {
-            // botLevels.classList.remove("hidden");
             setTimeout(() => {
                 newMatch(); resetScores();
             }, 1000);
         });
         pvpBtn.addEventListener("click", () => { 
-            // botLevels.classList.add("hidden");
             setTimeout(() => {
                 newMatch(); resetScores();
             }, 1000);
         });
-        // normalLevel.addEventListener("click", () => { 
-        //     setTimeout(() => {newMatch(); resetScores();}, 4000);
-        // });
-        // impossibleLevel.addEventListener("click", () => { 
-        //     setTimeout(() => {newMatch(); resetScores();}, 4000);
-        // });
     };
 
     const resetScores = () => {
@@ -96,15 +75,10 @@ const gameBoard = (() => {
             player1Label.classList.remove("yellow");
             player2Label.classList.add("yellow");
             let index;
-            // if (normalLevel.checked) {
             index = Math.floor(Math.random() * 9);
             while (gameBoard[index] !== "") {
                 index = Math.floor(Math.random() * 9);
             }
-            // }
-            // else {
-            //     index = minimax(gameBoard, "X");
-            // }
             let cellValue = "c" + (index+1);
             
             document.querySelector("." + cellValue).click();
@@ -112,65 +86,6 @@ const gameBoard = (() => {
             displayController.switchBotTurn();
         }
     }
-
-    // const minimax = (state, player) => {
-    //     let maxPlayer = "X";
-    //     let otherPlayer = player === "X" ? "O" : "X";
-    
-    //     if (checkIfWinner(otherPlayer)) {
-    //         let score = (otherPlayer === maxPlayer ? 1 : -1) * (numEmptySquares(state) + 1);
-    //         return score;
-    //     } else if (numEmptySquares(state) === 0) {
-    //         return 0;
-    //     }
-    
-    //     let best;
-    //     if (player === maxPlayer) {
-    //         best = -Infinity;
-    //     } else {
-    //         best = Infinity;
-    //     }
-    
-    //     for (const possibleMove of availableMoves(state)) {
-    //         state[possibleMove] = player;
-    //         const simScore = minimax(state, otherPlayer);
-    
-    //         // Undo move
-    //         state[possibleMove] = "";
-    
-    //         if (player === maxPlayer) {
-    //             if (simScore > best) {
-    //                 best = simScore;
-    //             }
-    //         } else {
-    //             if (simScore < best) {
-    //                 best = simScore;
-    //             }
-    //         }
-    //     }
-
-    // return best;
-    // }
-
-    // const availableMoves = (state) => {
-    //     const emptyIndices = [];
-    //     for (let i = 0; i < state.length; i++) {
-    //         if (state[i] === "") {
-    //             emptyIndices.push(i);
-    //         }
-    //     }
-    //     return emptyIndices;
-    // }
-
-    // const numEmptySquares = (state) => {
-    //     let count = 0;
-    //     for (let i = 0; i < state.length; i++) {
-    //         if (state[i] === "") {
-    //             count++;
-    //         }
-    //     }
-    //     return count;
-    // }
 
     const checkBoard = () => {
         if (markedCellCount >= 9) {
@@ -242,7 +157,7 @@ const gameBoard = (() => {
             });
 
             setTimeout(() => {
-                if(!isCircle && pvbBtn.checked /*&& normalLevel.checked*/) { 
+                if(!isCircle && pvbBtn.checked) { 
                     botTurn(); 
                 }
                 pageTurn.classList.remove("animate");
@@ -293,7 +208,6 @@ const gameBoard = (() => {
                 winLocation = "RL-diagonal";
             }
         }        
-
         calcWinLocation(marker);
         return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
     };
@@ -444,8 +358,6 @@ const displayController = (() => {
             hand.classList.add("animate");
         }
     }
-    
-
 
     const handleWinner = (winLocation) => {
         let c1, c2, c3;
@@ -495,17 +407,10 @@ const displayController = (() => {
         c1.classList.add("yellow");
         c2.classList.add("yellow");
         c3.classList.add("yellow");
-
-        
-        
-    
-        
     };
 
     return {switchBotTurn, handleCircleMarker, handleCrossMarker, handleWinner, setBotTurn};
 })();
-
-
 
 //run on start
 gameBoard.addListeners();
