@@ -19,6 +19,11 @@ const game = (() => {
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
     const gameBoard = ["", "", "", "", "", "", "", "", ""];
 
+	const addListeners = () => {
+        [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
+        addRadioListeners();
+	};
+
     const addRadioListeners = () => {
         pvbBtn.addEventListener("click", () => {
             setTimeout(() => {
@@ -31,11 +36,6 @@ const game = (() => {
             }, 1000);
         });
     };
-
-	const addListeners = () => {
-        [...cells].forEach(cell => {cell.addEventListener("click", addMarker)});
-        addRadioListeners();
-	};
 
     const resetScores = () => {
         score1 = 0;
@@ -81,9 +81,9 @@ const game = (() => {
                 index = Math.floor(Math.random() * 9);
             }
             const cellValue = `c${index+1}`;
-            
+
             document.querySelector(`.${cellValue}`).click();
-            hand.classList.add("animate");
+            setTimeout(() => {hand.classList.add("animate")}, 9500);
             displayController.switchBotTurn();
         }
     }
@@ -91,40 +91,31 @@ const game = (() => {
     const checkBoard = () => {
         if (markedCellCount >= 9) {
             [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
-            setTimeout(() => {newMatch();}, 4000);
+            setTimeout(() => {newMatch();}, 3000);
         }
         else if (checkIfWinner("O")) {
-            if (isCircle) {
-                score2 += 1;
+                // eslint-disable-next-line no-unused-expressions
+                isCircle ? score2+=1 : score1+=1;
+                updateScores();
+                [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
+                displayController.handleWinner(winLocation);
+                setTimeout(() => { newMatch(); }, 3000);
             }
-            else {
-                score1 += 1;
+            else if (checkIfWinner("X")) {
+                // eslint-disable-next-line no-unused-expressions
+                isCircle ? score2+=1 : score1+=1;
+                updateScores();
+                [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
+                displayController.handleWinner(winLocation);
+                setTimeout(() => { newMatch();}, 3000);
             }
-            updateScores();
-            [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
-            displayController.handleWinner(winLocation);
-            setTimeout(() => { newMatch(); }, 4000);
-            }
-        else if (checkIfWinner("X")) {
-            if (isCircle) {
-                score2 += 1;
-            }
-            else {
-                score1 += 1;
-            }
-            updateScores();
-            [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
-            displayController.handleWinner(winLocation);
-            setTimeout(() => { newMatch();}, 4000);
-        }
-        
     }
 
     const remainingMoves = () => {
         let emptySpaces = 0;
         for (let i = 0; i<9; i+=1) {
             if (gameBoard[i] === "") {
-                emptySpaces += 1;
+                emptySpaces+=1;
             }
         }
         return emptySpaces;
@@ -136,7 +127,7 @@ const game = (() => {
     };
 
     const resetGameBoard = () => {
-        for(let i = 0; i < game.length; i+=1){
+        for(let i = 0; i < gameBoard.length; i+=1){
                 gameBoard[i] = "";
         }
     };
@@ -151,7 +142,7 @@ const game = (() => {
 
         [...cells].forEach(cell => {
             // eslint-disable-next-line no-param-reassign
-            cell.innerHTML = "";
+            cell.innerHTML = ""
             cell.removeAttribute("is-marked");
             cell.classList.remove("yellow");
         });
@@ -178,7 +169,7 @@ const game = (() => {
 
     const checkIfWinner = (marker) => {
         const checkRow = (index) => gameBoard[index] === marker && gameBoard[index+1] === marker && gameBoard[index+2] === marker;
-        
+
         const checkCol = (index) => gameBoard[index] === marker && gameBoard[index+3] === marker && gameBoard[index+6] === marker;
 
         const checkDiagLtoR = () => gameBoard[0] === marker && gameBoard[4] === marker && gameBoard[8] === marker;
@@ -215,11 +206,12 @@ const game = (() => {
         return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
     };
 
-	return {addListeners, gameBoard}
+	return { addListeners, gameBoard }
 })();
 
 const displayController = (() => {
     const pvpBtn = document.querySelector("#pvp");
+    const hand = document.querySelector(".hand");
     let markerType = "";
     let isBotTurn = false;
 
@@ -272,7 +264,6 @@ const displayController = (() => {
 
 
     const animateHandWithMarker = (event) => {
-        const hand = document.querySelector(".hand");
         const cell = event.target.classList;
 
         hand.classList = ("hand");
@@ -317,41 +308,42 @@ const displayController = (() => {
             }    
         }
         else if (cell.contains("c1")) {
-            hand.classList.add("cross-top-left");
-            game.gameBoard[0] = "X";
-        }
-        else if (cell.contains("c2")) {
-            hand.classList.add("cross-top-middle");
-            game.gameBoard[1] = "X";
-        }
-        else if (cell.contains("c3")) {
-            hand.classList.add("cross-top-right");
-            game.gameBoard[2] = "X";
-        }
-        else if (cell.contains("c4")) {
-            hand.classList.add("cross-middle-left");
-            game.gameBoard[3] = "X";
-        }
-        else if (cell.contains("c5")) {
-            hand.classList.add("cross-middle");
-            game.gameBoard[4] = "X";
-        }
-        else if (cell.contains("c6")) {
-            hand.classList.add("cross-middle-right");
-            game.gameBoard[5] = "X";
-        }
-        else if (cell.contains("c7")) {
-            hand.classList.add("cross-bottom-left");
-            game.gameBoard[6] = "X";
-        }
-        else if (cell.contains("c8")) {
-            hand.classList.add("cross-bottom-middle");
-            game.gameBoard[7] = "X";
-        }
-        else {
-            hand.classList.add("cross-bottom-right");
-            game.gameBoard[8] = "X";
-        }  
+                hand.classList.add("cross-top-left");
+                game.gameBoard[0] = "X";
+            }
+            else if (cell.contains("c2")) {
+                hand.classList.add("cross-top-middle");
+                game.gameBoard[1] = "X";
+            }
+            else if (cell.contains("c3")) {
+                hand.classList.add("cross-top-right");
+                game.gameBoard[2] = "X";
+            }
+            else if (cell.contains("c4")) {
+                hand.classList.add("cross-middle-left");
+                game.gameBoard[3] = "X";
+            }
+            else if (cell.contains("c5")) {
+                hand.classList.add("cross-middle");
+                game.gameBoard[4] = "X";
+            }
+            else if (cell.contains("c6")) {
+                hand.classList.add("cross-middle-right");
+                game.gameBoard[5] = "X";
+            }
+            else if (cell.contains("c7")) {
+                hand.classList.add("cross-bottom-left");
+                game.gameBoard[6] = "X";
+            }
+            else if (cell.contains("c8")) {
+                hand.classList.add("cross-bottom-middle");
+                game.gameBoard[7] = "X";
+            }
+            else {
+                hand.classList.add("cross-bottom-right");
+                game.gameBoard[8] = "X";
+            }  
+         
 
         if (isBotTurn === true && !pvpBtn.checked) {
             hand.classList.add("animate");
@@ -367,6 +359,7 @@ const displayController = (() => {
             c1 = document.querySelector(".c1");
             c2 = document.querySelector(".c2");
             c3 = document.querySelector(".c3");
+            
         }
         else if (winLocation === "2nd-row") {
             c1 = document.querySelector(".c4");
