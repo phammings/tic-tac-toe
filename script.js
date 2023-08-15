@@ -8,14 +8,16 @@ const gameBoard = (() => {
     const botLevels = document.querySelector(".bot-levels");
     const playerScore1 = document.querySelector(".score-1");
     const playerScore2 = document.querySelector(".score-2");
-    const normalLevel = document.querySelector("#normal");
-    const impossibleLevel = document.querySelector("#impossible");
+    const player1Label = document.querySelector(".player-1");
+    const player2Label = document.querySelector(".player-2");
+    // const normalLevel = document.querySelector("#normal");
+    // const impossibleLevel = document.querySelector("#impossible");
     let isCircle = true;
     let markedCellCount = 0;
     let winLocation = "";
     let score1 = 0;
     let score2 = 0;
-    let botLevel = "";
+    // let botLevel = "";
     // from left to right, top to bottom i.e. [1, 2, 3, 4, 5, 6, 7, 8, 9]
     // where 1 2 3 is in the first row, 4 5 6 is in the second row, and so on...
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
@@ -26,24 +28,29 @@ const gameBoard = (() => {
 	};
 
     const addRadioListeners = () => {
-        if (pvbBtn.checked) {
-            botLevels.classList.remove("hidden");
-            if(normalLevel.checked) {
-                botLevel = "Normal";
-            }
-            else {
-                botLevel = "Impossible";
-            }
-        }
+        // if (pvbBtn.checked) {
+        //     botLevels.classList.remove("hidden");
+        //     if(normalLevel.checked) {
+        //         botLevel = "Normal";
+        //     }
+        //     else {
+        //         botLevel = "Impossible";
+        //     }
+        // }
         pvbBtn.addEventListener("click", () => {
-            botLevels.classList.remove("hidden");
-            setTimeout(() => {newMatch(); resetScores();}, 2000);
+            // botLevels.classList.remove("hidden");
+            setTimeout(() => {newMatch(); resetScores();}, 1000);
         });
         pvpBtn.addEventListener("click", () => { 
-            botLevels.classList.add("hidden");
-            setTimeout(() => {newMatch(); resetScores();}, 2000);
-            
+            // botLevels.classList.add("hidden");
+            setTimeout(() => {newMatch(); resetScores();}, 1000);
         });
+        // normalLevel.addEventListener("click", () => { 
+        //     setTimeout(() => {newMatch(); resetScores();}, 4000);
+        // });
+        // impossibleLevel.addEventListener("click", () => { 
+        //     setTimeout(() => {newMatch(); resetScores();}, 4000);
+        // });
     };
 
     const resetScores = () => {
@@ -58,12 +65,16 @@ const gameBoard = (() => {
             if (isCircle) {
                 displayController.handleCircleMarker(event);
                 displayController.switchBotTurn();
+                player2Label.classList.add("yellow");
+                player1Label.classList.remove("yellow");
             }
             else {
                 displayController.handleCrossMarker(event);
                 if (pvpBtn.checked) {
                     displayController.switchBotTurn();
                 }
+                player2Label.classList.remove("yellow");
+                player1Label.classList.add("yellow");
             }
             markedCellCount += 1;
             isCircle = !isCircle;
@@ -71,35 +82,94 @@ const gameBoard = (() => {
         }
         checkBoard();
         if (pvbBtn.checked) {
-            botTurn();
+            setTimeout(() => { botTurn(); }, 1000);
         }
-        
-        
     };
 
     const botTurn = () => {
         if(isCircle === false && remainingMoves() > 0) {
-            if (normalLevel.checked) {
-                let randomIndex = Math.floor(Math.random() * 9);
-
-                while (gameBoard[randomIndex] !== "") {
-                    randomIndex = Math.floor(Math.random() * 9);
-                }
-                let cellValue = "c" + (randomIndex+1);
-                
-                document.querySelector("." + cellValue).click();
-                displayController.switchBotTurn();
-                
+            player1Label.classList.remove("yellow");
+            player2Label.classList.add("yellow");
+            let index;
+            // if (normalLevel.checked) {
+            index = Math.floor(Math.random() * 9);
+            while (gameBoard[index] !== "") {
+                index = Math.floor(Math.random() * 9);
             }
-            else {}
+            // }
+            // else {
+            //     index = minimax(gameBoard, "X");
+            // }
+            let cellValue = "c" + (index+1);
+            document.querySelector("." + cellValue).click();
+            displayController.switchBotTurn();
         }
     }
+
+    // const minimax = (state, player) => {
+    //     let maxPlayer = "X";
+    //     let otherPlayer = player === "X" ? "O" : "X";
+    
+    //     if (checkIfWinner(otherPlayer)) {
+    //         let score = (otherPlayer === maxPlayer ? 1 : -1) * (numEmptySquares(state) + 1);
+    //         return score;
+    //     } else if (numEmptySquares(state) === 0) {
+    //         return 0;
+    //     }
+    
+    //     let best;
+    //     if (player === maxPlayer) {
+    //         best = -Infinity;
+    //     } else {
+    //         best = Infinity;
+    //     }
+    
+    //     for (const possibleMove of availableMoves(state)) {
+    //         state[possibleMove] = player;
+    //         const simScore = minimax(state, otherPlayer);
+    
+    //         // Undo move
+    //         state[possibleMove] = "";
+    
+    //         if (player === maxPlayer) {
+    //             if (simScore > best) {
+    //                 best = simScore;
+    //             }
+    //         } else {
+    //             if (simScore < best) {
+    //                 best = simScore;
+    //             }
+    //         }
+    //     }
+
+    // return best;
+    // }
+
+    // const availableMoves = (state) => {
+    //     const emptyIndices = [];
+    //     for (let i = 0; i < state.length; i++) {
+    //         if (state[i] === "") {
+    //             emptyIndices.push(i);
+    //         }
+    //     }
+    //     return emptyIndices;
+    // }
+
+    // const numEmptySquares = (state) => {
+    //     let count = 0;
+    //     for (let i = 0; i < state.length; i++) {
+    //         if (state[i] === "") {
+    //             count++;
+    //         }
+    //     }
+    //     return count;
+    // }
 
     const checkBoard = () => {
         //setTimeout(() => {
             if (markedCellCount >= 9) {
                 [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
-                setTimeout(() => {newMatch();}, 2000);
+                setTimeout(() => {newMatch();}, 4000);
             }
             else {
                 if (checkIfWinner("O")) {
@@ -108,7 +178,7 @@ const gameBoard = (() => {
                     updateScores();
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)});
                     displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 2000);
+                    setTimeout(() => {newMatch();}, 4000);
                 }
                 else if (checkIfWinner("X")) {
                     console.log("X is Winner!");
@@ -116,7 +186,7 @@ const gameBoard = (() => {
                     updateScores();
                     [...cells].forEach(cell => {cell.removeEventListener("click", addMarker)}); 
                     displayController.handleWinner(winLocation);
-                    setTimeout(() => {newMatch();}, 2000);
+                    setTimeout(() => {newMatch();}, 4000);
                 }
             }
         //}, 100);
@@ -174,7 +244,7 @@ const gameBoard = (() => {
             if(!isCircle && pvbBtn.checked && normalLevel.checked) {
                 botTurn();
             }
-        }, 3000);
+        }, 4000);
         
 	};
 
@@ -220,50 +290,7 @@ const gameBoard = (() => {
             else if (checkDiagRtoL() == true) {
                 winLocation = "RL-diagonal";
             }
-        }
-
-        const minimax = (state, player) => {
-            const maxPlayer = "";
-            isCircle ? maxPlayer = "O" : maxPlayer = "X";
-            const otherPlayer = player === "X" ? "O" : "X";
-        
-            if (state.currentWinner === otherPlayer) {
-                const score = (otherPlayer === maxPlayer ? 1 : -1) * (state.numEmptySquares() + 1);
-                return { position: null, score: score };
-            } else if (!state.emptySquares()) {
-                return { position: null, score: 0 };
-            }
-        
-            let best;
-            if (player === maxPlayer) {
-                best = { position: null, score: -Infinity };
-            } else {
-                best = { position: null, score: Infinity };
-            }
-        
-            for (const possibleMove of state.availableMoves()) {
-                state.makeMove(possibleMove, player);
-                const simScore = minimax(state, otherPlayer);
-        
-                // Undo move
-                state.board[possibleMove] = ' ';
-                state.currentWinner = null;
-                simScore.position = possibleMove;
-        
-                if (player === maxPlayer) {
-                    if (simScore.score > best.score) {
-                        best = simScore;
-                    }
-                } else {
-                    if (simScore.score < best.score) {
-                        best = simScore;
-                    }
-                }
-            }
-        
-            return best;
-        }
-        
+        }        
 
         calcWinLocation(marker);
         return checkRow(0) || checkRow(3) || checkRow(6) || checkCol(0) || checkCol(1) || checkCol(2) || checkDiagLtoR() || checkDiagRtoL();
