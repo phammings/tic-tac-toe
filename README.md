@@ -57,7 +57,7 @@ This project primarily focuses on using modules and factory functions to impleme
 - ✔️ Object to control flow of game
 - ✔️ Little global code as possible
 - ✔️ Place everything inside modules and/or factory functions
-- ✔️ Create an AI so player can play agasint computer
+- ✔️ Create an AI so player can play against the computer
     - [ ] Create an unbeatable AI with the minimax algorithm
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
