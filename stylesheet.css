@@ -26,6 +26,8 @@ html {
 	background-position: center;
 }
 
+
+
 body {
 	display: grid;
 	height: 100%;
@@ -739,4 +741,42 @@ body {
 
 .yellow {
 	background-color: yellow;
+}
+
+@media only screen and (max-width: 800px), (max-height: 900px) {
+	:root {
+		--cell: 120px;
+		margin-top: -15vh;
+	}
+
+	html {
+		background-size: 29%;
+	}
+
+	.player-1{
+		margin: 15vh 10vh 0 4vh;
+	}
+
+	.player-2 {
+		margin-top: 15vh;
+	}
+
+	.score-1 {
+		margin: -5vh 16vh 10vh 7vh;
+	}
+
+	.score-2 {
+		margin-bottom: 10vh;
+		margin-top: -5vh;
+	}
+
+	.gamemode {
+		margin-bottom: 25vh;
+		margin-top: 20em;
+	}
+
+	.player-label {
+		margin-bottom: 10vh;
+	}
+
 }
