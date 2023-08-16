@@ -34,8 +34,7 @@ Simple Tic-Tac-Toe web browser game implemented for The Odin Project.
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Tic-Tac-Toe Project Screenshot][product-screenshot]](https://imgur.com/a/IqMwhSC.png)
-<img src="./resources/images/websiteScreenshot.png" width="300">
+<img src="./resources/images/websiteScreenshot.png" width="600">
 
 This project primarily focuses on using modules and factory functions to implement a tic-tac-toe game that can be played versus another player or an AI on a web browser's DOM.
 
@@ -54,11 +53,12 @@ This project primarily focuses on using modules and factory functions to impleme
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
+- ✔️ Store gameboard as array inside Gameboard object
+- ✔️ Object to control flow of game
+- ✔️ Little global code as possible
+- ✔️ Place everything inside modules and/or factory functions
+- ✔️ Create an AI so player can play agasint computer
+    - [ ] Create an unbeatable AI with the minimax algorithm
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
