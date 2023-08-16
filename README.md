@@ -36,7 +36,7 @@ Simple Tic-Tac-Toe web browser game implemented for <a href="https://www.theodin
 
 <img src="./resources/images/websiteScreenshot.png" width="600">
 
-This project primarily focuses on using modules and factory functions to implement a tic-tac-toe game that can be played versus another player or an AI on a web browser's DOM.
+This project primarily focuses on using modules and factory functions to implement an interactive tic-tac-toe game that can be played versus another player or an AI on a web browser's DOM. An additional goal of the project was to familiarize myself with CSS animations which is heavily used in the project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
