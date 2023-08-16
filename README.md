@@ -1,5 +1,5 @@
 # Tic-Tac-Toe
-
+<a name="readme-top"></a>
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -7,7 +7,7 @@
 <h3 align="center">Tic Tac Toe</h3>
 
   <p align="center">
-Simple Tic-Tac-Toe web browser game implemented for The Odin Project.
+Simple Tic-Tac-Toe web browser game implemented for <a href="https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe">The Odin Project.</a>
     <br />
     <a href="https://phammings.github.io/tic-tac-toe/">View Demo</a>
     <br />
